@@ -467,6 +467,24 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .project-card h3 { font-size: 1.2rem; }
 .project-date { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 14px; }
+.project-links {
+  margin-top: 16px;
+  margin-bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+}
+.project-links a {
+  font-weight: 700;
+  text-decoration: none;
+}
+.project-links a:hover,
+.project-links a:focus-visible { text-decoration: underline; }
+.project-links-pending {
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 0.9rem;
+}
 
 /* Timeline (Education & Experience) */
 .timeline {
