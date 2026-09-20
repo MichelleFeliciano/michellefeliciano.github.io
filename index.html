@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Michelle Feliciano — Data Engineering Portfolio</title>
+<meta name="description" content="Portfolio of Michelle Feliciano, a Business Computer Information Systems graduate pursuing an M.S. in Data Engineering with an AI certificate.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#3f6b34">
+
+<!-- Social preview (LinkedIn, iMessage, Slack, etc.). Add og:url once this site has a live address. -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Michelle Feliciano — Data Engineering Portfolio">
+<meta property="og:description" content="Business Computer Information Systems graduate pursuing an M.S. in Data Engineering. Projects, experience, and skills.">
+<meta property="og:image" content="social-preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Michelle Feliciano — Data Engineering Portfolio">
+<meta name="twitter:description" content="Business Computer Information Systems graduate pursuing an M.S. in Data Engineering. Projects, experience, and skills.">
+<meta name="twitter:image" content="social-preview.png">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+  <symbol id="leaf-shape" viewBox="0 0 100 140">
+    <path class="leaf-blade" d="M50,8 C74,28 88,60 66,100 C60,116 40,116 34,100 C12,60 26,28 50,8 Z"/>
+    <path class="leaf-vein" d="M50,14 C50,50 50,85 50,108"/>
+    <path class="leaf-vein" d="M50,35 C42,40 34,45 27,50"/>
+    <path class="leaf-vein" d="M50,35 C58,40 66,45 73,50"/>
+    <path class="leaf-vein" d="M50,55 C41,61 33,67 25,72"/>
+    <path class="leaf-vein" d="M50,55 C59,61 67,67 75,72"/>
+    <path class="leaf-vein" d="M50,75 C43,80 36,85 30,90"/>
+    <path class="leaf-vein" d="M50,75 C57,80 64,85 70,90"/>
+  </symbol>
+</svg>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="#top">MF<span class="brand-dot">.</span></a>
+
+    <nav class="site-nav" aria-label="Primary">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a class="icon-btn" href="https://github.com/MichelleFeliciano" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile (opens in a new tab)">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor" stroke="none"><path d="M12 .5C5.73.5.75 5.48.75 11.75c0 5.02 3.26 9.28 7.77 10.78.57.1.78-.25.78-.55 0-.27-.01-1.17-.02-2.12-3.16.69-3.83-1.34-3.83-1.34-.52-1.31-1.26-1.66-1.26-1.66-1.03-.7.08-.69.08-.69 1.14.08 1.74 1.17 1.74 1.17 1.01 1.73 2.65 1.23 3.3.94.1-.73.4-1.23.72-1.51-2.52-.29-5.17-1.26-5.17-5.6 0-1.24.44-2.25 1.17-3.04-.12-.29-.51-1.45.11-3.02 0 0 .96-.31 3.13 1.16a10.9 10.9 0 0 1 5.7 0c2.17-1.47 3.13-1.16 3.13-1.16.62 1.57.23 2.73.11 3.02.73.79 1.17 1.8 1.17 3.04 0 4.35-2.66 5.31-5.19 5.59.41.35.77 1.04.77 2.1 0 1.52-.01 2.74-.01 3.11 0 .3.2.66.79.55A11.26 11.26 0 0 0 23.25 11.75C23.25 5.48 18.27.5 12 .5Z"/></svg>
+      </a>
+      <button id="theme-toggle" class="icon-btn" type="button" aria-pressed="false" aria-label="Switch to dark theme">
+        <svg class="icon icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79Z"/></svg>
+      </button>
+      <button id="nav-toggle" class="icon-btn nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+
+  <section id="top" class="hero">
+    <div class="leaf-cluster leaf-cluster--tl" aria-hidden="true">
+      <svg class="leaf leaf-p1 leaf-tone-1" viewBox="0 0 100 140"><use href="#leaf-shape"></use></svg>
+      <svg class="leaf leaf-p2 leaf-tone-2" viewBox="0 0 100 140"><use href="#leaf-shape"></use></svg>
+      <svg class="leaf leaf-p3 leaf-tone-3" viewBox="0 0 100 140"><use href="#leaf-shape"></use></svg>
+      <svg class="leaf leaf-p4 leaf-tone-2" viewBox="0 0 100 140"><use href="#leaf-shape"></use></svg>
+      <svg class="leaf leaf-p5 leaf-tone-1" viewBox="0 0 100 140"><use href="#leaf-shape"></use></svg>
+    </div>
+    <div class="leaf-cluster leaf-cluster--tr" aria-hidden="true">
+      <svg class="leaf leaf-p1 leaf-tone-2" viewBox="0 0 100 140"><use href="#leaf-shape"></use></svg>
+      <svg class="leaf leaf-p2 leaf-tone-1" viewBox="0 0 100 140"><use href="#leaf-shape"></use></svg>
+      <svg class="leaf leaf-p3 leaf-tone-2" viewBox="0 0 100 140"><use href="#leaf-shape"></use></svg>
+      <svg class="leaf leaf-p4 leaf-tone-3" viewBox="0 0 100 140"><use href="#leaf-shape"></use></svg>
+      <svg class="leaf leaf-p5 leaf-tone-2" viewBox="0 0 100 140"><use href="#leaf-shape"></use></svg>
+    </div>
+    <div class="wrap hero-inner">
+      <div class="hero-avatar" aria-hidden="true">MF</div>
+      <p class="eyebrow">Data Engineering &amp; Information Systems</p>
+      <h1>Michelle Feliciano</h1>
+      <p class="hero-lede">Business Computer Information Systems graduate pursuing a Master's in Data Engineering, seeking an entry-level Data Engineer role focused on data analysis, pipeline design, and systems development. Detail-oriented, with a passion for solving complex data problems.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#projects">View Projects</a>
+        <a class="btn btn-ghost" href="#contact">Get in Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="section">
+    <div class="wrap">
+      <h2><svg class="heading-leaf" viewBox="0 0 100 140" aria-hidden="true"><use href="#leaf-shape"></use></svg><span class="section-index">01</span> About</h2>
+      <div class="about-grid">
+        <p class="about-copy">
+          I'm a UNT graduate in Business Computer Information Systems, now building on that
+          foundation with a Master of Science in Data Engineering and an Artificial Intelligence
+          Graduate Academic Certificate. My coursework and self-directed projects span database
+          systems, data mining, machine learning, and web development — and my work history in
+          fast-paced retail, administrative, and sales roles has sharpened the parts of the job
+          that don't show up in a tech stack: attention to detail, clear communication, and
+          keeping complex, confidential records accurate under deadline pressure.
+        </p>
+        <ul class="competency-list" aria-label="Core competencies">
+          <li>Attention to detail</li>
+          <li>Analytical problem solving</li>
+          <li>Written &amp; verbal communication</li>
+          <li>Time management</li>
+          <li>Team leadership</li>
+          <li>Client confidentiality</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="education" class="section section-alt">
+    <div class="wrap">
+      <h2><svg class="heading-leaf" viewBox="0 0 100 140" aria-hidden="true"><use href="#leaf-shape"></use></svg><span class="section-index">02</span> Education</h2>
+      <ol class="timeline">
+        <li class="timeline-item">
+          <div class="timeline-marker" aria-hidden="true"></div>
+          <div class="timeline-content">
+            <p class="timeline-date">Expected May 2028</p>
+            <h3>Master of Science, Data Engineering</h3>
+            <p class="timeline-org">University of North Texas — Denton, TX</p>
+            <p>Includes the Artificial Intelligence Graduate Academic Certificate. Current coursework includes Information Retrieval, Big Data &amp; Data Science, and Empirical Analysis.</p>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <div class="timeline-marker" aria-hidden="true"></div>
+          <div class="timeline-content">
+            <p class="timeline-date">May 2025</p>
+            <h3>Bachelor of Science, Business Computer Information Systems</h3>
+            <p class="timeline-org">University of North Texas — Denton, TX</p>
+            <p>Coursework spanned database systems, data warehousing, data mining, IT security, enterprise programming, and web information technology.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="skills" class="section">
+    <div class="wrap">
+      <h2><svg class="heading-leaf" viewBox="0 0 100 140" aria-hidden="true"><use href="#leaf-shape"></use></svg><span class="section-index">03</span> Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <h3>Programming &amp; Query Languages</h3>
+          <ul class="tag-list">
+            <li class="tag">Python <span class="tag-note">(Beginner)</span></li>
+            <li class="tag">Java <span class="tag-note">(Beginner)</span></li>
+            <li class="tag">SQL</li>
+          </ul>
+        </div>
+        <div class="skill-card">
+          <h3>Software &amp; Tools</h3>
+          <ul class="tag-list">
+            <li class="tag">Tableau</li>
+            <li class="tag">Power BI</li>
+            <li class="tag">Excel</li>
+            <li class="tag">Outlook</li>
+            <li class="tag">PowerPoint</li>
+            <li class="tag">Word</li>
+          </ul>
+        </div>
+        <div class="skill-card">
+          <h3>Web Development</h3>
+          <ul class="tag-list">
+            <li class="tag">HTML</li>
+            <li class="tag">CSS</li>
+            <li class="tag">JavaScript</li>
+          </ul>
+        </div>
+        <div class="skill-card">
+          <h3>Technical Domains</h3>
+          <ul class="tag-list">
+            <li class="tag">Big Data &amp; Data Science</li>
+            <li class="tag">Database Systems</li>
+            <li class="tag">Data Mining</li>
+            <li class="tag">Machine Learning</li>
+            <li class="tag">Deep Learning</li>
+            <li class="tag">Natural Language Processing</li>
+            <li class="tag">Data Visualization</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="section section-alt">
+    <div class="wrap">
+      <h2><svg class="heading-leaf" viewBox="0 0 100 140" aria-hidden="true"><use href="#leaf-shape"></use></svg><span class="section-index">04</span> Projects</h2>
+      <p class="section-note">Hands-on builds spanning algorithms, full-stack app development, and web design — each taken from research or concept through to a working result.</p>
+      <div class="project-grid">
+        <article class="project-card">
+          <p class="project-tag">Graduate coursework — CSCE 5300 Big Data &amp; Data Science</p>
+          <h3>Dynamic NN-Descent: k-NN Graph Construction</h3>
+          <p class="project-date">Fall 2026</p>
+          <p><strong>Goal:</strong> reproduce and benchmark a 2025 IEEE Transactions on Big Data algorithm for building approximate k-nearest-neighbor graphs — a core building block behind vector search and recommendation systems.</p>
+          <p><strong>What I built:</strong> implemented both the classic NN-Descent baseline and the paper's Dynamic NN-Descent method from scratch in Python, then benchmarked both on the SIFT dataset and a synthetic dataset.</p>
+          <p><strong>Outcome:</strong> Dynamic NN-Descent cut peak memory by roughly 46% and raised recall@10 from 95.3% to 98.7% versus the baseline, matching the paper's reported results.</p>
+        </article>
+        <article class="project-card">
+          <p class="project-tag">Personal project</p>
+          <h3>Second Memory</h3>
+          <p class="project-date">September 2026 – Present</p>
+          <p><strong>Goal:</strong> replace scattered notes apps and spreadsheets with one offline-first place to track books, recipes, to-dos, a shopping list, and a household budget.</p>
+          <p><strong>What I built:</strong> a multi-collection app with filtering, sorting, and undo/redo across every collection, plus a self-hosted HTTPS sync server (with conflict resolution) so data stays in sync between my phone and computer over LAN or Tailscale — no cloud account required.</p>
+          <p><strong>Stack:</strong> HTML, CSS, JavaScript, browser storage, Python (sync server). Installable as a PWA; works fully offline.</p>
+        </article>
+        <article class="project-card">
+          <p class="project-tag">Personal project — web studio concept</p>
+          <h3>Sagebrush Sites</h3>
+          <p class="project-date">September 2026 – Present</p>
+          <p><strong>Goal:</strong> design and launch a freelance web-studio brand for salons and beauty businesses, from positioning through a deployed site.</p>
+          <p><strong>What I built:</strong> a hand-coded, zero-dependency multi-page marketing site (Home, About, Process, Skills, Work, Contact) on a custom domain, with four concept case studies — spec work for fictional clients, built to demonstrate craft rather than list real customers — plus a client-intake questionnaire and a reusable portfolio template shared with fellow students.</p>
+          <p><strong>Stack:</strong> HTML, CSS, JavaScript, zero external dependencies.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" class="section">
+    <div class="wrap">
+      <h2><svg class="heading-leaf" viewBox="0 0 100 140" aria-hidden="true"><use href="#leaf-shape"></use></svg><span class="section-index">05</span> Experience</h2>
+      <ol class="timeline">
+        <li class="timeline-item">
+          <div class="timeline-marker" aria-hidden="true"></div>
+          <div class="timeline-content">
+            <p class="timeline-date">July 2026 – August 2026</p>
+            <h3>Store Manager</h3>
+            <p class="timeline-org">Great Clips — Argyle, TX</p>
+            <ul>
+              <li>Supervised a team of 7 employees, managing scheduling, client records, and payment processing for a location serving approximately 250 clients per week.</li>
+              <li>Maintained accurate, confidential client and business records so staff could retrieve client history without delays.</li>
+              <li>Contributed to an approximately 18% increase in positive customer reviews.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <div class="timeline-marker" aria-hidden="true"></div>
+          <div class="timeline-content">
+            <p class="timeline-date">January 2025 – June 2026</p>
+            <h3>Administrative Assistant</h3>
+            <p class="timeline-org">Brighter Image — Fort Worth, TX</p>
+            <ul>
+              <li>Processed approximately 6 cases and fielded around 15 client calls daily, maintaining accurate records across digital and physical filing systems.</li>
+              <li>Designed and implemented an improved filing system and a new process for collecting client photos and feedback, reducing time spent locating case files.</li>
+              <li>Coordinated information flow between lab and office staff to keep case documentation current and accessible.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <div class="timeline-marker" aria-hidden="true"></div>
+          <div class="timeline-content">
+            <p class="timeline-date">July 2024 – October 2024</p>
+            <h3>Sales Consultant</h3>
+            <p class="timeline-org">AT&amp;T — Lake Worth, TX</p>
+            <ul>
+              <li>Assisted 8–10 customers daily, maintaining and updating account data across Salesforce and internal systems.</li>
+              <li>Ranked #2 among store employees for consistently meeting and exceeding monthly sales quotas.</li>
+              <li>Processed service documentation, account changes, and payments under same-day deadlines.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <div class="timeline-marker" aria-hidden="true"></div>
+          <div class="timeline-content">
+            <p class="timeline-date">October 2024 – May 2025</p>
+            <h3>IT Consultant <span class="timeline-badge">Volunteer</span></h3>
+            <p class="timeline-org">Allie's Haven Animal Rescue — Fort Worth, TX</p>
+            <ul>
+              <li>Updated and maintained the organization's website, keeping adoption listings and event information current.</li>
+              <li>Supported social media integration to boost outreach and engagement.</li>
+              <li>Provided general IT support, troubleshooting website, email, and device issues for staff and volunteers.</li>
+            </ul>
+          </div>
+        </li>
+      </ol>
+
+      <div class="orgs">
+        <h3>Organizations</h3>
+        <ul class="org-list">
+          <li>
+            <span class="org-name">Association for Information Systems Student Chapter</span>
+            <span class="org-role">Member · September 2023 – Present</span>
+          </li>
+          <li>
+            <span class="org-name">Cyber Club, G. Brint Ryan College of Business</span>
+            <span class="org-role">Member · October 2024 – Present</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section section-alt">
+    <div class="wrap contact-wrap">
+      <h2><svg class="heading-leaf" viewBox="0 0 100 140" aria-hidden="true"><use href="#leaf-shape"></use></svg><span class="section-index">06</span> Contact</h2>
+      <p class="section-note">Open to entry-level Data Engineer and data analyst roles. The fastest way to reach me is email.</p>
+      <div class="contact-actions">
+        <a class="btn btn-primary btn-lg" href="mailto:michelle.feliciano502@gmail.com">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/></svg>
+          michelle.feliciano502@gmail.com
+        </a>
+        <a class="btn btn-ghost btn-lg" href="https://github.com/MichelleFeliciano" target="_blank" rel="noopener noreferrer">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor" stroke="none"><path d="M12 .5C5.73.5.75 5.48.75 11.75c0 5.02 3.26 9.28 7.77 10.78.57.1.78-.25.78-.55 0-.27-.01-1.17-.02-2.12-3.16.69-3.83-1.34-3.83-1.34-.52-1.31-1.26-1.66-1.26-1.66-1.03-.7.08-.69.08-.69 1.14.08 1.74 1.17 1.74 1.17 1.01 1.73 2.65 1.23 3.3.94.1-.73.4-1.23.72-1.51-2.52-.29-5.17-1.26-5.17-5.6 0-1.24.44-2.25 1.17-3.04-.12-.29-.51-1.45.11-3.02 0 0 .96-.31 3.13 1.16a10.9 10.9 0 0 1 5.7 0c2.17-1.47 3.13-1.16 3.13-1.16.62 1.57.23 2.73.11 3.02.73.79 1.17 1.8 1.17 3.04 0 4.35-2.66 5.31-5.19 5.59.41.35.77 1.04.77 2.1 0 1.52-.01 2.74-.01 3.11 0 .3.2.66.79.55A11.26 11.26 0 0 0 23.25 11.75C23.25 5.48 18.27.5 12 .5Z"/></svg>
+          GitHub
+        </a>
+      </div>
+      <button id="print-resume" class="btn btn-ghost no-print" type="button">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
+        Download Résumé (PDF)
+      </button>
+      <p class="contact-location">Haslet, TX</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="leaf-cluster leaf-cluster--small leaf-cluster--bl" aria-hidden="true">
+    <svg class="leaf leaf-p1 leaf-tone-1" viewBox="0 0 100 140"><use href="#leaf-shape"></use></svg>
+    <svg class="leaf leaf-p3 leaf-tone-2" viewBox="0 0 100 140"><use href="#leaf-shape"></use></svg>
+    <svg class="leaf leaf-p5 leaf-tone-3" viewBox="0 0 100 140"><use href="#leaf-shape"></use></svg>
+  </div>
+  <div class="leaf-cluster leaf-cluster--small leaf-cluster--br" aria-hidden="true">
+    <svg class="leaf leaf-p1 leaf-tone-2" viewBox="0 0 100 140"><use href="#leaf-shape"></use></svg>
+    <svg class="leaf leaf-p3 leaf-tone-1" viewBox="0 0 100 140"><use href="#leaf-shape"></use></svg>
+    <svg class="leaf leaf-p5 leaf-tone-2" viewBox="0 0 100 140"><use href="#leaf-shape"></use></svg>
+  </div>
+  <div class="wrap footer-inner">
+    <p>&copy; <span id="year"></span> Michelle Feliciano. Built with plain HTML, CSS, and JavaScript — no external dependencies.</p>
+    <a class="back-to-top" href="#top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
