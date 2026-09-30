@@ -9,3 +9,4 @@ step, no external dependencies.
 - `styles.css` — design tokens, layout, light/dark theme
 - `script.js` — theme toggle, mobile nav, active-link highlighting, scroll reveal
 - `favicon.svg`, `social-preview.png` — site icon and social preview image
+- `Michelle-Feliciano-Resume.pdf` — downloadable résumé, linked from the Contact section

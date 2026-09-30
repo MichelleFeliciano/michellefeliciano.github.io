@@ -164,18 +164,6 @@
   }
 
   /* -------------------------------------------------------
-     Download Résumé (PDF) — uses the browser's native
-     Print → Save as PDF, styled by the @media print rules
-     in styles.css. No external dependency required.
-  ------------------------------------------------------- */
-  var printResumeBtn = document.getElementById("print-resume");
-  if (printResumeBtn) {
-    printResumeBtn.addEventListener("click", function () {
-      window.print();
-    });
-  }
-
-  /* -------------------------------------------------------
      Footer year
   ------------------------------------------------------- */
   var yearEl = document.getElementById("year");
