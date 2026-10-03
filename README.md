@@ -13,7 +13,7 @@ step, no external dependencies.
 - `script.js` — theme toggle, mobile nav, active-link highlighting, scroll reveal, and the
   skills-across-projects matrix (built from the `data-skills` attributes on the project cards)
 - `favicon.svg`, `social-preview.png`, `images/` — site icon, social preview image, screenshots
-- `Michelle-Feliciano-Resume.pdf` — downloadable résumé, linked from the Contact section
+- `Michelle_Feliciano_Resume_Cohesive.docx` — downloadable résumé, linked from the Contact section
 - `sitemap.xml`, `robots.txt` — search-engine discovery
 
 ## Quality checks
