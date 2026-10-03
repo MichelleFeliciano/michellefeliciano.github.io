@@ -181,6 +181,29 @@
   }
 
   /* -------------------------------------------------------
+     Device mockup tilt (mouse and trackpad only)
+  ------------------------------------------------------- */
+  if (!reduceMotion && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    Array.prototype.forEach.call(document.querySelectorAll("[data-tilt]"), function (stage) {
+      var rig = stage.querySelector(".device-rig");
+      if (!rig) return;
+      stage.addEventListener("pointermove", function (event) {
+        var box = stage.getBoundingClientRect();
+        var x = (event.clientX - box.left) / box.width - 0.5;
+        var y = (event.clientY - box.top) / box.height - 0.5;
+        rig.classList.add("is-tilting");
+        rig.style.setProperty("--ry", (x * 12).toFixed(2) + "deg");
+        rig.style.setProperty("--rx", (-y * 9).toFixed(2) + "deg");
+      });
+      stage.addEventListener("pointerleave", function () {
+        rig.classList.remove("is-tilting");
+        rig.style.setProperty("--ry", "0deg");
+        rig.style.setProperty("--rx", "0deg");
+      });
+    });
+  }
+
+  /* -------------------------------------------------------
      Scroll progress bar and header shadow
   ------------------------------------------------------- */
   var progressBar = document.createElement("div");

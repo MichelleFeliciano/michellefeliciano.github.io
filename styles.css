@@ -1012,3 +1012,68 @@ ul { margin: 0; padding: 0; list-style: none; }
   }
   .reveal { transition-delay: var(--d, 0s); }
 }
+
+/* ---------------------------------------------------------
+   Project mockups (desktop + phone) at the top of each card
+--------------------------------------------------------- */
+.project-card { overflow: hidden; }
+.device-stage {
+  position: relative;
+  margin: -26px -26px 22px;
+  padding: 24px 24px 38px;
+  background: linear-gradient(160deg, var(--accent-soft), var(--bg));
+  border-bottom: 1px solid var(--border);
+  perspective: 900px;
+}
+.device-rig {
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.35s ease-out;
+}
+.device-rig.is-tilting { transition: transform 0.08s linear; }
+.browser {
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: 0 24px 36px -26px rgba(0, 0, 0, 0.6);
+}
+.browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  background: var(--accent-soft);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.66rem;
+  color: var(--text-muted);
+}
+.browser-bar i { display: block; width: 7px; height: 7px; border-radius: 50%; background: var(--leaf-1); }
+.browser-bar i:nth-child(2) { background: var(--leaf-2); }
+.browser-bar i:nth-child(3) { background: var(--leaf-3); }
+.browser-bar span {
+  flex: 1;
+  margin-left: 6px;
+  padding: 2px 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  background: var(--bg);
+  border-radius: 999px;
+}
+.browser img { width: 100%; height: auto; }
+.phone {
+  position: absolute;
+  right: -4px;
+  bottom: -18px;
+  width: 26%;
+  overflow: hidden;
+  border: 4px solid #1b2014;
+  border-radius: 15px;
+  background: #1b2014;
+  box-shadow: 0 20px 28px -14px rgba(0, 0, 0, 0.6);
+  transform: translateZ(44px);
+}
+.phone img { width: 100%; height: auto; border-radius: 10px; }
+@media print { .device-stage { display: none !important; } }
