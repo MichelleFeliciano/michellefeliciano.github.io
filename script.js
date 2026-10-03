@@ -324,6 +324,106 @@
   }
 
   /* -------------------------------------------------------
+     Contact form. No server: it builds a mailto: link, so the
+     message goes through the visitor's own email app. The form
+     is hidden in the HTML and shown here, so it never appears
+     as a dead control when JavaScript is off.
+  ------------------------------------------------------- */
+  var contactForm = document.getElementById("contact-form");
+  var mailLink = document.querySelector('a[href^="mailto:"]');
+
+  if (contactForm && mailLink) {
+    var toAddress = mailLink.getAttribute("href").replace(/^mailto:/i, "");
+    var nameField = document.getElementById("cf-name");
+    var emailField = document.getElementById("cf-email");
+    var messageField = document.getElementById("cf-message");
+    var errorBox = document.getElementById("cf-error");
+    var statusBox = document.getElementById("cf-status");
+    var copyBtn = document.getElementById("copy-email");
+
+    contactForm.hidden = false;
+
+    var singleLine = function (value) {
+      return value.replace(/[\r\n]+/g, " ").trim();
+    };
+
+    var showError = function (field, message) {
+      [nameField, emailField, messageField].forEach(function (f) {
+        f.removeAttribute("aria-invalid");
+        f.removeAttribute("aria-describedby");
+      });
+      if (!field) {
+        errorBox.hidden = true;
+        errorBox.textContent = "";
+        return;
+      }
+      field.setAttribute("aria-invalid", "true");
+      field.setAttribute("aria-describedby", "cf-error");
+      errorBox.textContent = message;
+      errorBox.hidden = false;
+      field.focus();
+    };
+
+    contactForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      statusBox.textContent = "";
+      var name = singleLine(nameField.value);
+      var email = singleLine(emailField.value);
+      var message = messageField.value.trim();
+
+      if (!name) return showError(nameField, "Please enter your name.");
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        return showError(emailField, "Please enter a valid email address so I can reply.");
+      }
+      if (message.length < 10) {
+        return showError(messageField, "Please write a short message (at least 10 characters).");
+      }
+      showError(null);
+
+      var subject = "Portfolio message from " + name;
+      var body = message + "\n\n" + name + "\n" + email;
+      window.location.href =
+        "mailto:" + toAddress +
+        "?subject=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(body);
+      statusBox.textContent =
+        "Your email app should open with the message ready. If nothing happens, use \"Copy email address\" and send it from any email program.";
+    });
+
+    copyBtn.addEventListener("click", function () {
+      var done = function () {
+        statusBox.textContent = "Email address copied: " + toAddress;
+      };
+      var fallback = function () {
+        var temp = document.createElement("input");
+        temp.value = toAddress;
+        temp.setAttribute("readonly", "");
+        temp.style.position = "absolute";
+        temp.style.left = "-9999px";
+        document.body.appendChild(temp);
+        temp.select();
+        var ok = false;
+        try {
+          ok = document.execCommand("copy");
+        } catch (e) {
+          ok = false;
+        }
+        document.body.removeChild(temp);
+        if (ok) {
+          done();
+        } else {
+          statusBox.textContent = "Couldn't copy automatically. My email address is " + toAddress;
+        }
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(toAddress).then(done, fallback);
+      } else {
+        fallback();
+      }
+    });
+  }
+
+  /* -------------------------------------------------------
      Footer year
   ------------------------------------------------------- */
   var yearEl = document.getElementById("year");

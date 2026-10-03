@@ -398,6 +398,29 @@
           GitHub
         </a>
       </div>
+      <form id="contact-form" class="contact-form no-print" aria-labelledby="contact-form-title" novalidate hidden>
+        <h3 id="contact-form-title">Send a quick note</h3>
+        <p class="form-help">This opens your email app with the message ready to send. Nothing is stored or sent through this website.</p>
+        <div class="field">
+          <label for="cf-name">Your name</label>
+          <input id="cf-name" type="text" autocomplete="name" maxlength="80" required>
+        </div>
+        <div class="field">
+          <label for="cf-email">Your email <span class="field-note">(so I can reply)</span></label>
+          <input id="cf-email" type="email" autocomplete="email" maxlength="120" required>
+        </div>
+        <div class="field">
+          <label for="cf-message">Message</label>
+          <textarea id="cf-message" rows="5" maxlength="1000" required></textarea>
+        </div>
+        <p id="cf-error" class="form-error" role="alert" hidden></p>
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Open in email app</button>
+          <button id="copy-email" class="btn btn-ghost" type="button">Copy email address</button>
+        </div>
+        <p id="cf-status" class="form-status" role="status" aria-live="polite"></p>
+      </form>
+
       <a class="btn btn-ghost no-print" href="Michelle-Feliciano-Resume.pdf" download>
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
         Download Résumé (PDF)
