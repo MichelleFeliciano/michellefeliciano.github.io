@@ -164,6 +164,166 @@
   }
 
   /* -------------------------------------------------------
+     Skills-across-projects matrix. Built entirely from the
+     data-skills / data-short attributes on the project cards
+     (single source of truth), and doubles as a project filter.
+     Without JS the cards simply show in full.
+  ------------------------------------------------------- */
+  var SKILLS = [
+    ["html", "HTML"],
+    ["css", "CSS"],
+    ["javascript", "JavaScript"],
+    ["responsive", "Responsive design"],
+    ["accessibility", "Accessibility"],
+    ["pwa", "Offline apps (PWA)"],
+    ["storage", "Browser storage and IndexedDB"],
+    ["data", "Data modeling and analysis"],
+    ["python", "Python"],
+    ["security", "Privacy and security"],
+    ["deployment", "Deployment (GitHub Pages)"]
+  ];
+
+  var projectGrid = document.querySelector(".project-grid");
+  var projectCards = projectGrid
+    ? Array.prototype.slice.call(projectGrid.querySelectorAll(".project-card[data-skills]"))
+    : [];
+
+  if (projectGrid && projectCards.length) {
+    var cardSkills = projectCards.map(function (card) {
+      return card.getAttribute("data-skills").split(/\s+/);
+    });
+    var activeSkill = null;
+
+    var el = function (tag, className, text) {
+      var node = document.createElement(tag);
+      if (className) node.className = className;
+      if (text) node.textContent = text;
+      return node;
+    };
+
+    var wrap = el("div", "skill-matrix");
+    wrap.appendChild(el("h3", null, "Skills across projects"));
+    wrap.appendChild(
+      el("p", "section-note", "Select a skill to see which projects use it and filter the projects above.")
+    );
+
+    var scroller = el("div", "matrix-scroll");
+    scroller.setAttribute("role", "region");
+    scroller.setAttribute("aria-label", "Skills used in each project");
+    scroller.tabIndex = 0;
+
+    var table = el("table", "matrix");
+    table.appendChild(el("caption", "sr-only", "Which skills each project uses"));
+
+    var headRow = el("tr");
+    headRow.appendChild(el("th", null, "Skill")).setAttribute("scope", "col");
+    projectCards.forEach(function (card) {
+      var th = el("th", "matrix-col", card.getAttribute("data-short"));
+      th.setAttribute("scope", "col");
+      headRow.appendChild(th);
+    });
+    var usedTh = el("th", null, "Used in");
+    usedTh.setAttribute("scope", "col");
+    headRow.appendChild(usedTh);
+    table.appendChild(el("thead")).appendChild(headRow);
+
+    var tbody = el("tbody");
+    var rows = [];
+    SKILLS.forEach(function (pair) {
+      var key = pair[0];
+      var count = cardSkills.filter(function (list) {
+        return list.indexOf(key) !== -1;
+      }).length;
+      if (!count) return;
+
+      var tr = el("tr");
+      var rowHead = el("th");
+      rowHead.setAttribute("scope", "row");
+      var btn = el("button", "matrix-skill", pair[1]);
+      btn.type = "button";
+      btn.setAttribute("aria-pressed", "false");
+      rowHead.appendChild(btn);
+      tr.appendChild(rowHead);
+
+      cardSkills.forEach(function (list) {
+        var used = list.indexOf(key) !== -1;
+        var td = el("td", "matrix-cell" + (used ? " is-on" : ""));
+        td.appendChild(el("span", "matrix-dot")).setAttribute("aria-hidden", "true");
+        td.appendChild(el("span", "sr-only", used ? "Used" : "Not used"));
+        tr.appendChild(td);
+      });
+
+      var total = el("td", "matrix-total");
+      var bar = el("span", "matrix-bar");
+      var fill = el("span", "matrix-fill");
+      fill.style.width = Math.round((count / projectCards.length) * 100) + "%";
+      bar.appendChild(fill);
+      bar.setAttribute("aria-hidden", "true");
+      total.appendChild(bar);
+      total.appendChild(el("span", "matrix-count", count + " of " + projectCards.length));
+      tr.appendChild(total);
+
+      tbody.appendChild(tr);
+      rows.push({ key: key, tr: tr, btn: btn });
+    });
+    table.appendChild(tbody);
+    scroller.appendChild(table);
+    wrap.appendChild(scroller);
+
+    var status = el("p", "matrix-status");
+    status.setAttribute("role", "status");
+    status.setAttribute("aria-live", "polite");
+    var reset = el("button", "btn btn-ghost matrix-reset", "Show all projects");
+    reset.type = "button";
+    reset.hidden = true;
+    var footer = el("div", "matrix-footer");
+    footer.appendChild(status);
+    footer.appendChild(reset);
+    wrap.appendChild(footer);
+
+    var applyFilter = function (skill) {
+      activeSkill = skill;
+      var shown = 0;
+      projectCards.forEach(function (card, i) {
+        var match = !skill || cardSkills[i].indexOf(skill) !== -1;
+        card.hidden = !match;
+        if (match) shown += 1;
+      });
+      rows.forEach(function (row) {
+        var on = row.key === skill;
+        row.btn.setAttribute("aria-pressed", String(on));
+        row.tr.classList.toggle("is-active", on);
+      });
+      var cols = table.querySelectorAll("tbody tr");
+      Array.prototype.forEach.call(cols, function (tr) {
+        Array.prototype.forEach.call(tr.querySelectorAll(".matrix-cell"), function (td, i) {
+          td.classList.toggle("is-dim", !!skill && cardSkills[i].indexOf(skill) === -1);
+        });
+      });
+      var label = "";
+      SKILLS.forEach(function (pair) {
+        if (pair[0] === skill) label = pair[1];
+      });
+      status.textContent = skill
+        ? "Showing " + shown + " of " + projectCards.length + " projects that use " + label + "."
+        : "Showing all " + projectCards.length + " projects.";
+      reset.hidden = !skill;
+    };
+
+    rows.forEach(function (row) {
+      row.btn.addEventListener("click", function () {
+        applyFilter(activeSkill === row.key ? null : row.key);
+      });
+    });
+    reset.addEventListener("click", function () {
+      applyFilter(null);
+    });
+
+    projectGrid.insertAdjacentElement("afterend", wrap);
+    applyFilter(null);
+  }
+
+  /* -------------------------------------------------------
      Footer year
   ------------------------------------------------------- */
   var yearEl = document.getElementById("year");
