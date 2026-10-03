@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Second Memory Case Study — Michelle Feliciano</title>
+<meta name="description" content="Case study: Second Memory, an offline-first personal organizer built as an installable web app, with undo/redo and an optional self-built sync server.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#3f6b34">
+<link rel="canonical" href="https://michellefeliciano.github.io/projects/second-memory.html">
+
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://michellefeliciano.github.io/projects/second-memory.html">
+<meta property="og:title" content="Second Memory Case Study — Michelle Feliciano">
+<meta property="og:description" content="An offline-first personal organizer with undo/redo and an optional Python sync server.">
+<meta property="og:image" content="https://michellefeliciano.github.io/social-preview.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body id="top">
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="../index.html#top">MF<span class="brand-dot">.</span></a>
+
+    <nav class="site-nav" aria-label="Primary">
+      <ul>
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#education">Education</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects" class="active">Projects</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <button id="theme-toggle" class="icon-btn" type="button" aria-pressed="false" aria-label="Switch to dark theme">
+        <svg class="icon icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79Z"/></svg>
+      </button>
+      <button id="nav-toggle" class="icon-btn nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden>
+    <ul>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#education">Education</a></li>
+      <li><a href="../index.html#skills">Skills</a></li>
+      <li><a href="../index.html#projects">Projects</a></li>
+      <li><a href="../index.html#experience">Experience</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+
+  <section class="section case-hero">
+    <div class="wrap">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="../index.html">Home</a> / <a href="../index.html#projects">Projects</a> / <span aria-current="page">Second Memory</span>
+      </nav>
+      <p class="eyebrow">Case study</p>
+      <h1>Second Memory</h1>
+      <p class="case-lede">An offline-first personal organizer that replaces a pile of notes apps and spreadsheets, with undo/redo everywhere and an optional sync server I wrote myself.</p>
+
+      <dl class="case-meta">
+        <div><dt>Role</dt><dd>Designer &amp; developer</dd></div>
+        <div><dt>Timeline</dt><dd>September 2026 – Present</dd></div>
+        <div><dt>Type</dt><dd>Personal project</dd></div>
+        <div><dt>Stack</dt><dd>HTML, CSS, JavaScript, Python</dd></div>
+      </dl>
+
+      <p class="project-links">
+        <a href="https://michellefeliciano.github.io/second-memory/" target="_blank" rel="noopener noreferrer">View Live Site →</a>
+        <a href="https://github.com/MichelleFeliciano/second-memory" target="_blank" rel="noopener noreferrer">View Code on GitHub →</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="wrap">
+      <figure class="case-figure">
+        <img src="../images/second-memory.jpg" width="799" height="506" alt="Second Memory in its dark theme: a sidebar with Home, Library (Books, Recipes), Personal (To-Do, Shopping List, Notes, Budget), and Health sections, with undo and redo buttons at the top." loading="lazy">
+        <figcaption>The app's home screen in a fresh browser, showing the sidebar of collections. All data lives on the user's own device.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap case-body">
+      <h2>The goal</h2>
+      <p>My books, recipes, to-dos, shopping lists, notes, and household bills lived in a half-dozen different apps and spreadsheets. I wanted one place for all of it that works with no connection, keeps my data on my own devices, and never loses an edit I regret.</p>
+
+      <h2>What I built</h2>
+      <ul>
+        <li><strong>An 11-section organizer.</strong> Home, Books, Recipes, Medications, Diagnoses, To-Do, Shopping List, Notes, Budget, résumé and portfolio links, and Coursework, all in one single-page app of about 4,800 lines of plain JavaScript with no framework.</li>
+        <li><strong>Undo and redo across every collection.</strong> A snapshot-based history (up to 50 steps) lets me reverse an edit or deletion, with a guard so that replaying history never records itself.</li>
+        <li><strong>Filtering and sorting</strong> within each collection.</li>
+        <li><strong>An installable, offline app.</strong> A web app manifest and a service worker cache the app shell, so it installs to a phone's home screen and runs without a connection.</li>
+        <li><strong>An optional sync server.</strong> A small Python server, using only the standard library, keeps a phone and a computer in step. It runs on Render with a persistent disk, and the app talks to it with a single passphrase.</li>
+      </ul>
+
+      <h2>Decisions that mattered</h2>
+      <ul>
+        <li><strong>Local-first by default.</strong> Data is stored in the browser, and nothing leaves the device unless syncing is turned on.</li>
+        <li><strong>Conflicts never lose an edit.</strong> The server owns a version number for every record. If two devices change the same record, the server keeps its copy and saves the other device's version as a separate new record, so neither side is silently discarded. Deletions are kept as markers so they spread to every device instead of being brought back by a stale copy.</li>
+        <li><strong>Tracking down a real sync bug.</strong> Every sync re-sent every record, and the server was counting unchanged records as edits, inflating version numbers and raising the odds of false conflicts. I traced it to the merge step and fixed it by comparing record content, ignoring bookkeeping fields, so an unchanged resend now does nothing.</li>
+        <li><strong>Locking down the server.</strong> The passphrase is checked with a constant-time comparison, saves are written to a temporary file and swapped in so a crash can't leave a half-written data file, and browser access is limited to an explicit list of allowed origins.</li>
+        <li><strong>Making updates reach installed copies.</strong> The service worker's cache name is versioned, because a browser only notices an update when the worker file changes; I documented that in the code so a deploy can't leave users stuck on old code.</li>
+        <li><strong>No dependencies.</strong> Both the app and the server use only what the browser and Python already provide, which keeps it easy to host and maintain.</li>
+      </ul>
+
+      <h2>What shipped</h2>
+      <p>The app is live on GitHub Pages and installable on a phone, and the sync server is deployed separately so the two devices I use share one set of data. It is built for my own daily use.</p>
+
+      <h2>Skills this project shows</h2>
+      <ul>
+        <li>Data modeling and state management for multiple related collections</li>
+        <li>Designing a conflict-aware sync protocol and building the server for it in Python</li>
+        <li>Progressive web app techniques: manifest, service worker, offline caching, versioned updates</li>
+        <li>Security basics: constant-time secret comparison, origin allow-listing, safe file writes</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="wrap">
+      <nav class="case-nav" aria-label="More case studies">
+        <a href="sagebrush-sites.html"><small>Previous case study</small>← Sagebrush Sites</a>
+        <a class="case-next" href="health-log.html"><small>Next case study</small>Health Log →</a>
+      </nav>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p>&copy; <span id="year"></span> Michelle Feliciano. Built with plain HTML, CSS, and JavaScript — no external dependencies.</p>
+    <a class="back-to-top" href="#top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>

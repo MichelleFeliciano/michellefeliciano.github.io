@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Health Log Case Study — Michelle Feliciano</title>
+<meta name="description" content="Case study: Health Log, a private, offline wellness tracker that cannot make network requests, imports Apple Health exports in the browser, and surfaces cautious, plain-language patterns.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#3f6b34">
+<link rel="canonical" href="https://michellefeliciano.github.io/projects/health-log.html">
+
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://michellefeliciano.github.io/projects/health-log.html">
+<meta property="og:title" content="Health Log Case Study — Michelle Feliciano">
+<meta property="og:description" content="A private, offline wellness tracker with in-browser Apple Health import and cautious pattern reporting.">
+<meta property="og:image" content="https://michellefeliciano.github.io/social-preview.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body id="top">
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="../index.html#top">MF<span class="brand-dot">.</span></a>
+
+    <nav class="site-nav" aria-label="Primary">
+      <ul>
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#education">Education</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects" class="active">Projects</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <button id="theme-toggle" class="icon-btn" type="button" aria-pressed="false" aria-label="Switch to dark theme">
+        <svg class="icon icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79Z"/></svg>
+      </button>
+      <button id="nav-toggle" class="icon-btn nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden>
+    <ul>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#education">Education</a></li>
+      <li><a href="../index.html#skills">Skills</a></li>
+      <li><a href="../index.html#projects">Projects</a></li>
+      <li><a href="../index.html#experience">Experience</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+
+  <section class="section case-hero">
+    <div class="wrap">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="../index.html">Home</a> / <a href="../index.html#projects">Projects</a> / <span aria-current="page">Health Log</span>
+      </nav>
+      <p class="eyebrow">Case study</p>
+      <h1>Health Log</h1>
+      <p class="case-lede">A private wellness tracker that runs entirely in the browser, cannot make network requests, and reads a full Apple Health export without uploading a byte of it.</p>
+
+      <dl class="case-meta">
+        <div><dt>Role</dt><dd>Designer &amp; developer</dd></div>
+        <div><dt>Timeline</dt><dd>September 2026 – Present</dd></div>
+        <div><dt>Type</dt><dd>Personal project</dd></div>
+        <div><dt>Stack</dt><dd>HTML, CSS, JavaScript</dd></div>
+        <div><dt>Storage</dt><dd>IndexedDB, on-device only</dd></div>
+      </dl>
+
+      <p class="project-links">
+        <a href="https://michellefeliciano.github.io/health-tracker/" target="_blank" rel="noopener noreferrer">View Live Site →</a>
+        <a href="https://github.com/MichelleFeliciano/health-tracker" target="_blank" rel="noopener noreferrer">View Code on GitHub →</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="wrap">
+      <figure class="case-figure">
+        <img src="../images/health-log.jpg" width="799" height="506" alt="The Today screen of Health Log in a dark theme, showing a daily check-in with 0 to 10 rating buttons and a bottom tab bar for Today, History, Trends, Patterns, and Settings." loading="lazy">
+        <figcaption>The Today screen in a fresh browser: a short daily check-in with large, easy-to-tap rating buttons and a plain-language scale for each question. No data has been entered.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap case-body">
+      <h2>The goal</h2>
+      <p>Health data is among the most sensitive data a person has, and most tracking apps send it to a server. I wanted a daily log I could trust, one that stays on my device by design, works offline, and can pull in years of Apple Health history without handing it to anyone.</p>
+
+      <h2>What I built</h2>
+      <ul>
+        <li><strong>Five screens.</strong> Today, History, Trends, Patterns, and Settings, in roughly 9,000 lines of plain JavaScript split into 19 small modules, with no frameworks or libraries.</li>
+        <li><strong>Apple Health import.</strong> It reads the full "Export All Health Data" zip in the browser, plus daily CSV files from an iOS Shortcut. A custom zip reader pulls out only the pieces it needs in small slices, so even a very large export never has to be loaded into memory at once.</li>
+        <li><strong>Caffeine tracking.</strong> Drink presets, unit conversion, daily totals, and a baseline period, with the calculation logic kept in a pure module that has no dependence on the screen, storage, or the clock.</li>
+        <li><strong>Backup and restore.</strong> A versioned backup file with migration, plus clear merge rules so restoring on top of existing data behaves predictably.</li>
+        <li><strong>Pattern cards.</strong> Plain-language summaries of how pairs of measures move together over the last 90 days.</li>
+      </ul>
+
+      <h2>Decisions that mattered</h2>
+      <ul>
+        <li><strong>Privacy enforced by the browser, not just promised.</strong> The page's Content Security Policy blocks all network connections, so even a bug or a bad dependency could not send data anywhere.</li>
+        <li><strong>All-or-nothing imports.</strong> A large import is read and resolved first, then written in a single database transaction, so a failure or a cancel leaves no half-imported data behind. Big files are scanned in a Web Worker so the screen stays responsive.</li>
+        <li><strong>Honest statistics.</strong> Pattern cards wait for a minimum amount of data, and say "no clear pattern yet" rather than claiming there is no link, since a short history can't prove an absence.</li>
+        <li><strong>A repository that can't leak health data.</strong> The project's ignore rules are an allow-list of app files only, so exports, backups, and personal notes can never be committed by accident.</li>
+        <li><strong>Deterministic, testable logic.</strong> The core calculations, such as caffeine totals, are written as pure functions that receive dates and inputs as parameters, which keeps results reproducible and easy to test.</li>
+      </ul>
+
+      <h2>What shipped</h2>
+      <p>The app is live on GitHub Pages, installable as an offline web app, and public on GitHub. It works without an account, a server, or a connection.</p>
+
+      <h2>Skills this project shows</h2>
+      <ul>
+        <li>Privacy-by-design thinking and applying browser security features (Content Security Policy)</li>
+        <li>Working with large files: streaming reads, Web Workers, and transactional writes in IndexedDB</li>
+        <li>Data modeling, aggregation, and communicating statistics honestly</li>
+        <li>Structuring a larger codebase into small, single-purpose modules</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="wrap">
+      <nav class="case-nav" aria-label="More case studies">
+        <a href="second-memory.html"><small>Previous case study</small>← Second Memory</a>
+        <a class="case-next" href="../index.html#projects"><small>Back to</small>All projects →</a>
+      </nav>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p>&copy; <span id="year"></span> Michelle Feliciano. Built with plain HTML, CSS, and JavaScript — no external dependencies.</p>
+    <a class="back-to-top" href="#top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>
