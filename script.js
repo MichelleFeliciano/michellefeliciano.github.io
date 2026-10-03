@@ -212,6 +212,7 @@
   document.body.appendChild(progressBar);
 
   var siteHeader = document.querySelector(".site-header");
+  var timelines = document.querySelectorAll(".timeline");
   var scrollTicking = false;
 
   function onScrollFrame() {
@@ -219,6 +220,11 @@
     var max = doc.scrollHeight - doc.clientHeight;
     progressBar.style.setProperty("--p", max > 0 ? Math.min(1, window.scrollY / max).toFixed(4) : 0);
     if (siteHeader) siteHeader.classList.toggle("is-scrolled", window.scrollY > 8);
+    Array.prototype.forEach.call(timelines, function (line) {
+      var box = line.getBoundingClientRect();
+      var fill = (window.innerHeight * 0.6 - box.top) / Math.max(box.height, 1);
+      line.style.setProperty("--tl", Math.max(0, Math.min(1, fill)).toFixed(3));
+    });
     scrollTicking = false;
   }
 
@@ -234,6 +240,86 @@
   );
   window.addEventListener("resize", onScrollFrame);
   onScrollFrame();
+
+  /* -------------------------------------------------------
+     Experience filter. Each role carries data-tags in the HTML,
+     so the roles stay the single source of truth. Without JS
+     every role simply shows.
+  ------------------------------------------------------- */
+  var roleList = document.querySelector("#experience .timeline");
+  var roleItems = roleList
+    ? Array.prototype.slice.call(roleList.querySelectorAll(".timeline-item[data-tags]"))
+    : [];
+
+  if (roleList && roleItems.length) {
+    var ROLE_FILTERS = [
+      ["it", "IT and web", "IT and web"],
+      ["records", "Records and systems", "records and systems"],
+      ["leadership", "Leadership", "leadership"],
+      ["customer", "Customer service", "customer service"]
+    ];
+    var activeRoleTag = null;
+
+    var mk = function (tag, className, text) {
+      var node = document.createElement(tag);
+      if (className) node.className = className;
+      if (text) node.textContent = text;
+      return node;
+    };
+    var roleHasTag = function (item, tag) {
+      return item.getAttribute("data-tags").split(/\s+/).indexOf(tag) !== -1;
+    };
+
+    var filterBar = mk("div", "role-filters");
+    filterBar.setAttribute("role", "group");
+    filterBar.setAttribute("aria-label", "Filter roles by type of experience");
+
+    var roleChips = [];
+    var addChip = function (tag, label, phrase) {
+      var count = tag
+        ? roleItems.filter(function (item) { return roleHasTag(item, tag); }).length
+        : roleItems.length;
+      if (!count) return;
+      var chip = mk("button", "role-chip", label + " (" + count + ")");
+      chip.type = "button";
+      chip.setAttribute("aria-pressed", "false");
+      chip.addEventListener("click", function () {
+        applyRoleFilter(activeRoleTag === tag ? null : tag);
+      });
+      filterBar.appendChild(chip);
+      roleChips.push({ tag: tag, label: label, phrase: phrase, chip: chip });
+    };
+    addChip(null, "All roles", "");
+    ROLE_FILTERS.forEach(function (pair) { addChip(pair[0], pair[1], pair[2]); });
+
+    var roleStatus = mk("p", "role-status");
+    roleStatus.setAttribute("role", "status");
+    roleStatus.setAttribute("aria-live", "polite");
+
+    var applyRoleFilter = function (tag) {
+      activeRoleTag = tag;
+      var shown = 0;
+      roleItems.forEach(function (item) {
+        var match = !tag || roleHasTag(item, tag);
+        item.hidden = !match;
+        if (match) shown += 1;
+      });
+      var activeLabel = "";
+      roleChips.forEach(function (entry) {
+        var on = entry.tag === tag;
+        entry.chip.setAttribute("aria-pressed", String(on));
+        if (on && tag) activeLabel = entry.phrase;
+      });
+      roleStatus.textContent = tag
+        ? "Showing " + shown + " of " + roleItems.length + " roles with " + activeLabel + " experience."
+        : "Showing all " + roleItems.length + " roles.";
+      onScrollFrame();
+    };
+
+    roleList.parentNode.insertBefore(filterBar, roleList);
+    roleList.parentNode.insertBefore(roleStatus, roleList);
+    applyRoleFilter(null);
+  }
 
   /* -------------------------------------------------------
      Skills-across-projects matrix. Built entirely from the

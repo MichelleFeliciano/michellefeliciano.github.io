@@ -10,8 +10,9 @@ step, no external dependencies.
 - `index.html` — page content and structure
 - `projects/` — one in-depth case-study page per project
 - `styles.css` — design tokens, layout, light/dark theme
-- `script.js` — theme toggle, mobile nav, active-link highlighting, scroll reveal, and the
-  skills-across-projects matrix (built from the `data-skills` attributes on the project cards)
+- `script.js` — theme toggle, mobile nav, active-link highlighting, motion (scroll reveals,
+  progress bar, mockup tilt), the skills-across-projects matrix (built from `data-skills` on the
+  project cards), the experience filter (built from `data-tags` on each role), and the contact form
 - `favicon.svg`, `social-preview.png`, `images/` — site icon, social preview image, screenshots
 - `Michelle_Feliciano_Resume_Cohesive.docx` — downloadable résumé, linked from the Contact section
 - `sitemap.xml`, `robots.txt` — search-engine discovery
