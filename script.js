@@ -140,28 +140,77 @@
      fully visible without JS; classes are added here so a
      no-JS visitor never gets opacity:0 elements)
   ------------------------------------------------------- */
-  var revealTargets = document.querySelectorAll(
-    ".project-card, .skill-card, .timeline-item, .competency-list li"
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var revealTargets = Array.prototype.slice.call(
+    document.querySelectorAll(
+      ".project-card, .skill-card, .timeline-item, .competency-list li, .orgs li"
+    )
   );
 
-  if ("IntersectionObserver" in window && revealTargets.length) {
+  if (!reduceMotion && "IntersectionObserver" in window && revealTargets.length) {
     var revealObserver = new IntersectionObserver(
       function (entries, observer) {
         entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
-          }
+          if (!entry.isIntersecting) return;
+          var target = entry.target;
+          observer.unobserve(target);
+          target.classList.add("is-visible");
+          // Once the fade finishes, drop the helper classes so the element's
+          // own hover transitions are not slowed down by the reveal timing.
+          target.addEventListener("transitionend", function done(event) {
+            if (event.propertyName !== "opacity") return;
+            target.removeEventListener("transitionend", done);
+            target.classList.remove("reveal", "is-visible");
+            target.style.removeProperty("--d");
+          });
         });
       },
       { threshold: 0.15 }
     );
 
+    var revealCounts = new Map();
     revealTargets.forEach(function (el) {
+      var parent = el.parentElement;
+      var index = revealCounts.get(parent) || 0;
+      revealCounts.set(parent, index + 1);
+      el.style.setProperty("--d", (index % 4) * 0.07 + "s");
       el.classList.add("reveal");
       revealObserver.observe(el);
     });
   }
+
+  /* -------------------------------------------------------
+     Scroll progress bar and header shadow
+  ------------------------------------------------------- */
+  var progressBar = document.createElement("div");
+  progressBar.className = "scroll-progress";
+  progressBar.setAttribute("aria-hidden", "true");
+  document.body.appendChild(progressBar);
+
+  var siteHeader = document.querySelector(".site-header");
+  var scrollTicking = false;
+
+  function onScrollFrame() {
+    var doc = document.documentElement;
+    var max = doc.scrollHeight - doc.clientHeight;
+    progressBar.style.setProperty("--p", max > 0 ? Math.min(1, window.scrollY / max).toFixed(4) : 0);
+    if (siteHeader) siteHeader.classList.toggle("is-scrolled", window.scrollY > 8);
+    scrollTicking = false;
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollTicking) {
+        scrollTicking = true;
+        window.requestAnimationFrame(onScrollFrame);
+      }
+    },
+    { passive: true }
+  );
+  window.addEventListener("resize", onScrollFrame);
+  onScrollFrame();
 
   /* -------------------------------------------------------
      Skills-across-projects matrix. Built entirely from the
