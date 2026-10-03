@@ -1,0 +1,36 @@
+name: Site checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check links, images, metadata, and structured data
+        run: python3 scripts/check_site.py
+
+      - name: Serve the site locally
+        run: |
+          python3 -m http.server 5173 &
+          sleep 2
+
+      - name: Run Lighthouse on every page
+        run: |
+          mkdir lighthouse-reports
+          for page in index.html projects/sagebrush-sites.html projects/second-memory.html projects/health-log.html; do
+            name=$(echo "$page" | tr '/.' '--')
+            npx --yes lighthouse@12 "http://localhost:5173/$page" \
+              --chrome-flags="--headless=new --no-sandbox" \
+              --output=json --output-path="lighthouse-reports/$name.json" --quiet
+          done
+
+      - name: Enforce score thresholds
+        run: python3 scripts/assert_lighthouse.py lighthouse-reports
