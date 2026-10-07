@@ -144,7 +144,7 @@
 
   var revealTargets = Array.prototype.slice.call(
     document.querySelectorAll(
-      ".project-card, .skill-card, .timeline-item, .competency-list li, .orgs li"
+      ".project-card, .skill-card, .timeline-item, .competency-list li"
     )
   );
 

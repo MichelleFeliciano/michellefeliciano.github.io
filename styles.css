@@ -545,22 +545,6 @@ ul { margin: 0; padding: 0; list-style: none; }
   margin-left: 8px;
 }
 
-.orgs { margin-top: 48px; }
-.orgs h3 { font-size: 1.1rem; margin-bottom: 16px; }
-.org-list { display: flex; flex-direction: column; gap: 10px; }
-.org-list li {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 6px;
-  padding: 14px 16px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-}
-.org-name { font-weight: 700; }
-.org-role { color: var(--text-muted); font-size: 0.9rem; }
-
 /* Contact */
 .contact-wrap { text-align: center; }
 .contact-wrap .section-note { margin-inline: auto; }
@@ -658,8 +642,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   .competency-list { flex-direction: row; flex-wrap: wrap; gap: 8px; }
   .competency-list li,
   .skill-card,
-  .project-card,
-  .org-list li {
+  .project-card {
     background: transparent !important;
     border: 1px solid #cccccc !important;
     box-shadow: none !important;
