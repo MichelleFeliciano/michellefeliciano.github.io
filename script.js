@@ -94,7 +94,7 @@
     });
 
     document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape") {
+      if (event.key === "Escape" && !mobileNav.hidden) {
         closeMobileNav();
         navToggle.focus();
       }
@@ -871,7 +871,7 @@
       var message = messageField.value.trim();
 
       if (!name) return showError(nameField, "Please enter your name.");
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      if (!/^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/.test(email)) {
         return showError(emailField, "Please enter a valid email address so I can reply.");
       }
       if (message.length < 10) {

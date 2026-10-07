@@ -233,6 +233,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   min-height: 24px;
 }
 .mobile-nav[data-open="true"] { display: block; }
+@media (min-width: 861px) { .mobile-nav { display: none !important; } }
 
 @media (max-width: 860px) {
   .site-nav { display: none; }
@@ -446,7 +447,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 /* Projects */
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   gap: 24px;
 }
 .project-card {
