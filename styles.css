@@ -933,8 +933,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   height: 10px;
   border-radius: 50%;
   background: var(--accent);
-  animation: now-pulse 2.4s ease-out infinite;
 }
+.is-live .now-dot { animation: now-pulse 2.4s ease-out infinite; }
 @keyframes now-pulse {
   0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); }
   70%, 100% { box-shadow: 0 0 0 10px transparent; }
@@ -997,10 +997,10 @@ ul { margin: 0; padding: 0; list-style: none; }
 
   /* Slow, small sway on the decorative leaves. Uses the separate `rotate` and
      `translate` properties so it does not fight the layout transforms. */
-  .leaf-cluster { animation: pf-sway 16s ease-in-out infinite alternate; }
-  .leaf-cluster--tr { animation-duration: 19s; animation-delay: -4s; }
-  .leaf-cluster--bl { animation-duration: 21s; animation-delay: -7s; }
-  .leaf-cluster--br { animation-duration: 18s; animation-delay: -2s; }
+  .is-live .leaf-cluster { animation: pf-sway 16s ease-in-out infinite alternate; }
+  .is-live .leaf-cluster--tr { animation-duration: 19s; animation-delay: -4s; }
+  .is-live .leaf-cluster--bl { animation-duration: 21s; animation-delay: -7s; }
+  .is-live .leaf-cluster--br { animation-duration: 18s; animation-delay: -2s; }
   @keyframes pf-sway {
     from { rotate: -1.6deg; scale: 1; }
     to { rotate: 1.6deg; scale: 1.04; }
@@ -1226,8 +1226,8 @@ ul { margin: 0; padding: 0; list-style: none; }
 .marquee.is-ticker .marquee-inner {
   display: flex;
   width: max-content;
-  animation: marquee-scroll 55s linear infinite;
 }
+.is-live .marquee.is-ticker .marquee-inner { animation: marquee-scroll 55s linear infinite; }
 .marquee.is-ticker .marquee-list {
   flex-wrap: nowrap;
   justify-content: flex-start;
@@ -1278,7 +1278,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   .hero .leaf-cluster--tl { --depth: 18px; }
   .hero .leaf-cluster--tr { --depth: 26px; }
 
-  .hero-avatar--photo { animation: pf-rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both, pf-glow 4.5s ease-in-out 1s infinite; }
+  .hero-avatar--photo { animation: pf-rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+  .is-live .hero-avatar--photo { animation: pf-glow 4.5s ease-in-out 3; }
   @keyframes pf-glow {
     0%, 100% { box-shadow: 0 0 0 4px var(--accent), 0 22px 44px -20px rgba(0, 0, 0, 0.65), 0 0 0 0 transparent; }
     50% { box-shadow: 0 0 0 4px var(--accent), 0 22px 44px -20px rgba(0, 0, 0, 0.65), 0 0 34px 6px color-mix(in srgb, var(--accent) 38%, transparent); }

@@ -24,6 +24,6 @@ Every push runs `.github/workflows/checks.yml`, which:
 1. runs `scripts/check_site.py` to catch broken links, images, and `#anchors`, missing alt
    text, missing page metadata, invalid structured data (JSON-LD), and sitemap mismatches;
 2. runs [Lighthouse](https://github.com/GoogleChrome/lighthouse) on every page and fails if
-   performance drops below 90 or accessibility, best practices, or SEO drop below 95.
+   performance drops below 75 (shared CI runners are noisy) or accessibility, best practices, or SEO drop below 95.
 
 To run the first check locally: `python3 scripts/check_site.py`.

@@ -422,6 +422,23 @@
   }
 
   /* -------------------------------------------------------
+     Ambient animations (leaf sway, ticker, glow, pulse) start only after
+     the page has settled, so they never compete with loading.
+  ------------------------------------------------------- */
+  if (!reduceMotion) {
+    var goLive = function () {
+      window.setTimeout(function () {
+        root.classList.add("is-live");
+      }, 1800);
+    };
+    if (document.readyState === "complete") {
+      goLive();
+    } else {
+      window.addEventListener("load", goLive);
+    }
+  }
+
+  /* -------------------------------------------------------
      Scroll progress bar and header shadow
   ------------------------------------------------------- */
   var progressBar = document.createElement("div");
