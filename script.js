@@ -233,6 +233,74 @@
   }
 
   /* -------------------------------------------------------
+     Skills ticker. The HTML is a plain list; here it becomes a slow
+     scrolling band with a pause button. Skipped for reduced motion.
+  ------------------------------------------------------- */
+  var ticker = document.querySelector(".marquee");
+  var tickerList = ticker ? ticker.querySelector(".marquee-list") : null;
+  if (ticker && tickerList && !reduceMotion) {
+    var tickerInner = document.createElement("div");
+    tickerInner.className = "marquee-inner";
+    tickerList.parentNode.insertBefore(tickerInner, tickerList);
+    tickerInner.appendChild(tickerList);
+    var tickerCopy = tickerList.cloneNode(true);
+    tickerCopy.setAttribute("aria-hidden", "true");
+    tickerCopy.removeAttribute("aria-label");
+    tickerInner.appendChild(tickerCopy);
+    ticker.classList.add("is-ticker");
+
+    var tickerToggle = document.createElement("button");
+    tickerToggle.type = "button";
+    tickerToggle.className = "marquee-toggle";
+    tickerToggle.textContent = "Pause";
+    tickerToggle.setAttribute("aria-pressed", "false");
+    tickerToggle.addEventListener("click", function () {
+      var paused = ticker.classList.toggle("is-paused");
+      tickerToggle.textContent = paused ? "Play" : "Pause";
+      tickerToggle.setAttribute("aria-pressed", String(paused));
+    });
+    ticker.appendChild(tickerToggle);
+  }
+
+  /* -------------------------------------------------------
+     Count-up for the numbers in the at-a-glance strip
+  ------------------------------------------------------- */
+  var counters = Array.prototype.slice.call(document.querySelectorAll(".glance strong[data-count]"));
+  if (!reduceMotion && "IntersectionObserver" in window && counters.length) {
+    var runCount = function (node) {
+      var target = Number(node.getAttribute("data-count"));
+      var startTime = null;
+      var step = function (now) {
+        if (startTime === null) startTime = now;
+        var progress = Math.min(1, (now - startTime) / 1100);
+        node.textContent = String(Math.round(target * (1 - Math.pow(1 - progress, 3))));
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        } else {
+          node.textContent = String(target);
+        }
+      };
+      window.requestAnimationFrame(step);
+    };
+
+    var countObserver = new IntersectionObserver(
+      function (entries, observer) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          observer.unobserve(entry.target);
+          runCount(entry.target);
+        });
+      },
+      { threshold: 0.6 }
+    );
+
+    counters.forEach(function (node) {
+      node.textContent = "0";
+      countObserver.observe(node);
+    });
+  }
+
+  /* -------------------------------------------------------
      Scroll progress bar and header shadow
   ------------------------------------------------------- */
   var progressBar = document.createElement("div");
