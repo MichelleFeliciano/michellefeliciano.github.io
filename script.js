@@ -204,6 +204,35 @@
   }
 
   /* -------------------------------------------------------
+     Cursor spotlight: tell each hovered card where the pointer is
+     (the glow itself is pure CSS)
+  ------------------------------------------------------- */
+  if (!reduceMotion && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    var spotEvent = null;
+    var spotFrame = false;
+
+    document.addEventListener(
+      "pointermove",
+      function (event) {
+        spotEvent = event;
+        if (spotFrame) return;
+        spotFrame = true;
+        window.requestAnimationFrame(function () {
+          spotFrame = false;
+          var card = spotEvent.target.closest
+            ? spotEvent.target.closest(".project-card, .skill-card, .glance li")
+            : null;
+          if (!card) return;
+          var box = card.getBoundingClientRect();
+          card.style.setProperty("--mx", Math.round(spotEvent.clientX - box.left) + "px");
+          card.style.setProperty("--my", Math.round(spotEvent.clientY - box.top) + "px");
+        });
+      },
+      { passive: true }
+    );
+  }
+
+  /* -------------------------------------------------------
      Scroll progress bar and header shadow
   ------------------------------------------------------- */
   var progressBar = document.createElement("div");
