@@ -1264,12 +1264,10 @@ ul { margin: 0; padding: 0; list-style: none; }
    Hero: pointer-reactive leaves, photo glow, and focus line
 --------------------------------------------------------- */
 .hero-focus { margin: -4px 0 14px; font-size: 1.05rem; font-weight: 600; color: var(--text-muted); }
-.hero-focus .rotator {
-  display: inline-block;
-  color: var(--accent);
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-.hero-focus .rotator.is-out { opacity: 0; transform: translateY(-7px); }
+.hero-focus .rotator-clip { display: inline-block; height: 1.5em; line-height: 1.5; overflow: hidden; vertical-align: bottom; }
+.hero-focus .rotator { display: block; color: var(--accent); transition: transform 0.22s ease; }
+.hero-focus .rotator.is-out { transform: translateY(-110%); }
+.hero-focus .rotator.is-pre { transform: translateY(110%); transition: none; }
 .hero-inner > :nth-child(8) { animation-delay: 0.52s; }
 
 @media (prefers-reduced-motion: no-preference) {

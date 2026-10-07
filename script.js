@@ -335,11 +335,14 @@
   if (focusLine && !reduceMotion) {
     var finalText = focusLine.textContent;
     var phrases = focusLine.getAttribute("data-rotate").split("|");
+    var clipNode = document.createElement("span");
+    clipNode.className = "rotator-clip";
     var spanNode = document.createElement("span");
     spanNode.className = "rotator";
     spanNode.textContent = phrases[0];
+    clipNode.appendChild(spanNode);
     focusLine.textContent = "Focused on ";
-    focusLine.appendChild(spanNode);
+    focusLine.appendChild(clipNode);
 
     var phraseIndex = 0;
     var cycle = function () {
@@ -352,6 +355,9 @@
         }
         spanNode.textContent = phrases[phraseIndex];
         spanNode.classList.remove("is-out");
+        spanNode.classList.add("is-pre");
+        void spanNode.offsetWidth; // apply the start position before animating in
+        spanNode.classList.remove("is-pre");
         window.setTimeout(cycle, 900);
       }, 200);
     };
