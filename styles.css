@@ -1284,3 +1284,63 @@ ul { margin: 0; padding: 0; list-style: none; }
     50% { box-shadow: 0 0 0 4px var(--accent), 0 22px 44px -20px rgba(0, 0, 0, 0.65), 0 0 34px 6px color-mix(in srgb, var(--accent) 38%, transparent); }
   }
 }
+
+/* ---------------------------------------------------------
+   Accent color picker (green is the default and needs no attribute)
+--------------------------------------------------------- */
+:root[data-accent="terracotta"] {
+  --accent: #a8492b; --accent-contrast: #ffffff; --accent-soft: #f3e1d8; --focus-ring: #c4693f;
+  --leaf-1: #a8492b; --leaf-2: #c4693f; --leaf-3: #e0a67d;
+}
+:root[data-accent="blue"] {
+  --accent: #2c5f8a; --accent-contrast: #ffffff; --accent-soft: #dde9f3; --focus-ring: #4f86b3;
+  --leaf-1: #2c5f8a; --leaf-2: #4f86b3; --leaf-3: #9dbfdc;
+}
+:root[data-accent="terracotta"][data-theme="dark"] {
+  --accent: #e8946f; --accent-contrast: #1c0f08; --accent-soft: #3a2218; --focus-ring: #e8946f;
+  --leaf-1: #9a4a2c; --leaf-2: #b8683f; --leaf-3: #d9a57d;
+}
+:root[data-accent="blue"][data-theme="dark"] {
+  --accent: #7fb4e6; --accent-contrast: #0b1520; --accent-soft: #1c2a3a; --focus-ring: #7fb4e6;
+  --leaf-1: #3a6b95; --leaf-2: #5a8fba; --leaf-3: #8fb5d6;
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-accent="terracotta"]:not([data-theme="light"]) {
+    --accent: #e8946f; --accent-contrast: #1c0f08; --accent-soft: #3a2218; --focus-ring: #e8946f;
+    --leaf-1: #9a4a2c; --leaf-2: #b8683f; --leaf-3: #d9a57d;
+  }
+  :root[data-accent="blue"]:not([data-theme="light"]) {
+    --accent: #7fb4e6; --accent-contrast: #0b1520; --accent-soft: #1c2a3a; --focus-ring: #7fb4e6;
+    --leaf-1: #3a6b95; --leaf-2: #5a8fba; --leaf-3: #8fb5d6;
+  }
+}
+
+.accent-picker { position: relative; }
+.accent-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 300;
+  display: flex;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+.accent-menu[hidden] { display: none; }
+.accent-swatch {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+.accent-swatch span { position: absolute; inset: 3px; border-radius: 50%; background: var(--sw); }
+.accent-swatch[aria-pressed="true"] { border-color: var(--text); }
+.accent-swatch:hover { transform: scale(1.08); }
+@media print { .accent-picker { display: none !important; } }

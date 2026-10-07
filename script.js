@@ -365,6 +365,63 @@
   }
 
   /* -------------------------------------------------------
+     Accent color picker. The saved choice is applied by a tiny
+     inline script in <head> (so there is no flash); this wires
+     up the menu and saves new choices.
+  ------------------------------------------------------- */
+  var ACCENT_KEY = "portfolio-accent";
+  var accentToggle = document.getElementById("accent-toggle");
+  var accentMenu = document.getElementById("accent-menu");
+
+  if (accentToggle && accentMenu) {
+    var accentSwatches = Array.prototype.slice.call(accentMenu.querySelectorAll("[data-accent]"));
+
+    var setAccent = function (name) {
+      if (name === "green") {
+        root.removeAttribute("data-accent");
+      } else {
+        root.setAttribute("data-accent", name);
+      }
+      accentSwatches.forEach(function (swatch) {
+        swatch.setAttribute("aria-pressed", String(swatch.getAttribute("data-accent") === name));
+      });
+      try {
+        localStorage.setItem(ACCENT_KEY, name);
+      } catch (e) {
+        /* storage unavailable: the choice just won't persist */
+      }
+    };
+
+    var closeAccentMenu = function (returnFocus) {
+      accentMenu.hidden = true;
+      accentToggle.setAttribute("aria-expanded", "false");
+      if (returnFocus) accentToggle.focus();
+    };
+
+    var current = root.getAttribute("data-accent") || "green";
+    accentSwatches.forEach(function (swatch) {
+      swatch.setAttribute("aria-pressed", String(swatch.getAttribute("data-accent") === current));
+      swatch.addEventListener("click", function () {
+        setAccent(swatch.getAttribute("data-accent"));
+      });
+    });
+
+    accentToggle.addEventListener("click", function () {
+      var open = accentMenu.hidden;
+      accentMenu.hidden = !open;
+      accentToggle.setAttribute("aria-expanded", String(open));
+    });
+    document.addEventListener("click", function (event) {
+      if (!accentMenu.hidden && !accentMenu.contains(event.target) && !accentToggle.contains(event.target)) {
+        closeAccentMenu(false);
+      }
+    });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && !accentMenu.hidden) closeAccentMenu(true);
+    });
+  }
+
+  /* -------------------------------------------------------
      Scroll progress bar and header shadow
   ------------------------------------------------------- */
   var progressBar = document.createElement("div");
