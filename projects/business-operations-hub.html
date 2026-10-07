@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Operations Hub Case Study — Michelle Feliciano</title>
+<meta name="description" content="Case study: Business Operations Hub, a self-hosted system that follows client work from first inquiry to paid invoice, with role-based access, a client portal, and 551 automated tests.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#3f6b34">
+<link rel="canonical" href="https://michellefeliciano.github.io/projects/business-operations-hub.html">
+
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://michellefeliciano.github.io/projects/business-operations-hub.html">
+<meta property="og:title" content="Business Operations Hub Case Study — Michelle Feliciano">
+<meta property="og:description" content="A self-hosted system for quotes, approvals, projects, time, invoices, and reports, with a client portal and 551 automated tests.">
+<meta property="og:image" content="https://michellefeliciano.github.io/social-preview.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<script>try{var a=localStorage.getItem("portfolio-accent");if(a==="terracotta"||a==="blue")document.documentElement.setAttribute("data-accent",a)}catch(e){}</script>
+<link rel="stylesheet" href="../styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Business Operations Hub Case Study",
+  "description": "A self-hosted system for quotes, approvals, projects, time, invoices, and reports, with a client portal and 551 automated tests.",
+  "url": "https://michellefeliciano.github.io/projects/business-operations-hub.html",
+  "inLanguage": "en-US",
+  "author": { "@type": "Person", "name": "Michelle Feliciano", "url": "https://michellefeliciano.github.io/" }
+}
+</script>
+</head>
+<body id="top">
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="../index.html#top">MF<span class="brand-dot">.</span></a>
+
+    <nav class="site-nav" aria-label="Primary">
+      <ul>
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#education">Education</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects" class="active">Projects</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <div class="accent-picker">
+        <button id="accent-toggle" class="icon-btn" type="button" aria-expanded="false" aria-controls="accent-menu" aria-label="Choose accent color">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.8-.9 1.5-1.9-.3-1 .4-2.1 1.5-2.1H17a4 4 0 0 0 4-4c0-5-4-10-9-10z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10.5" cy="7" r="1"/><circle cx="15.5" cy="7.5" r="1"/></svg>
+        </button>
+        <div id="accent-menu" class="accent-menu" role="group" aria-label="Accent color" hidden>
+          <button type="button" class="accent-swatch" data-accent="green" aria-pressed="true" aria-label="Green"><span style="--sw:#3f6b34"></span></button>
+          <button type="button" class="accent-swatch" data-accent="terracotta" aria-pressed="false" aria-label="Terracotta"><span style="--sw:#a8492b"></span></button>
+          <button type="button" class="accent-swatch" data-accent="blue" aria-pressed="false" aria-label="Blue"><span style="--sw:#2c5f8a"></span></button>
+        </div>
+      </div>
+      <button id="theme-toggle" class="icon-btn" type="button" aria-pressed="false" aria-label="Switch to dark theme">
+        <svg class="icon icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79Z"/></svg>
+      </button>
+      <button id="nav-toggle" class="icon-btn nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden>
+    <ul>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#education">Education</a></li>
+      <li><a href="../index.html#skills">Skills</a></li>
+      <li><a href="../index.html#projects">Projects</a></li>
+      <li><a href="../index.html#experience">Experience</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+
+  <section class="section case-hero">
+    <div class="wrap">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="../index.html">Home</a> / <a href="../index.html#projects">Projects</a> / <span aria-current="page">Business Operations Hub</span>
+      </nav>
+      <p class="eyebrow">Case study</p>
+      <h1>Business Operations Hub</h1>
+      <p class="case-lede">A self-hosted business system that follows one piece of client work from the first inquiry to a paid invoice: leads, quotes, client approval, projects, time, expenses, invoices, payments, and reports, with a separate portal for clients.</p>
+
+      <dl class="case-meta">
+        <div><dt>Role</dt><dd>Designer &amp; developer</dd></div>
+        <div><dt>Timeline</dt><dd>October 2026</dd></div>
+        <div><dt>Type</dt><dd>Personal project</dd></div>
+        <div><dt>Stack</dt><dd>TypeScript, React, Hono, PostgreSQL</dd></div>
+        <div><dt>Hosting</dt><dd>Self-hosted, $0 to run</dd></div>
+      </dl>
+
+      <p class="project-links">
+        <a href="https://github.com/MichelleFeliciano/business-operations-hub" target="_blank" rel="noopener noreferrer">View Code on GitHub →</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="wrap">
+      <figure class="case-figure">
+        <img src="../images/business-operations-hub.jpg" width="799" height="506" alt="The Business Operations Hub dashboard: a sidebar of sections, and cards showing revenue received, an outstanding balance, time tracked this week, open quotes, and low-stock items." loading="lazy">
+        <figcaption>The dashboard running on made-up sample data (the clients, projects, and invoices are fictional): revenue received, what is still outstanding, time tracked this week, and open quotes at a glance.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap case-body">
+      <h2>The goal</h2>
+      <p>I run a small web design studio, Sagebrush Sites, and the paperwork around client work was scattered: a proposal here, a time sheet there, an invoice in a separate tool. I had already built three small tools for pieces of it (a proposal generator, a time tracker and invoicer, and a website audit tool). This project merges them into one system so a piece of work can be followed from the first inquiry to the final payment, and so the whole business can run at no recurring cost.</p>
+
+      <h2>What I built</h2>
+      <ul>
+        <li><strong>Quote to cash.</strong> Leads and intake, scoping and pricing, quotes and proposals, client approval by link, projects and tasks, time tracking, expenses, invoices, partial payments, and change orders, all connected so each step feeds the next.</li>
+        <li><strong>A client portal.</strong> Clients sign in to see only their own quotes, invoices, and documents. Every portal query is filtered by the signed-in client, and automated tests confirm one client can never see another's records.</li>
+        <li><strong>Reports and exports.</strong> Revenue, profitability, expense, time, and inventory reports; CSV exports of ten datasets; branded PDFs; and a full backup file that carries checksums and is verified before a restore writes anything.</li>
+        <li><strong>Website audits.</strong> An audit engine with seven modules (technical, SEO, performance, mobile, accessibility, security, and local-business data) that reports "unable to test" rather than guessing.</li>
+        <li><strong>Everything around the work.</strong> Documents with expiring share links, inventory, assets, and vendors, a calendar, an activity log, and role-based access for owners, admins, employees, contractors, and clients.</li>
+      </ul>
+      <p>In numbers: about 10,000 lines of TypeScript for the server, about 6,500 for the interface, 19 database migrations, and 233 API routes, with documentation covering the architecture, API, security model, backups, and deployment.</p>
+
+      <h2>Decisions that mattered</h2>
+      <ul>
+        <li><strong>Money is never a decimal.</strong> Amounts are stored as whole cents, quantities as thousandths, and rates as basis points, and all of the arithmetic lives in one small, unit-tested module, so totals cannot drift by a fraction of a cent.</li>
+        <li><strong>Permissions are enforced on the server.</strong> The interface hides what a person should not use, but the server decides what they can read or change. A record someone may not see answers "not found," and the final review called all 233 routes as each role to check it.</li>
+        <li><strong>Approvals work as evidence.</strong> A sent quote cannot be edited, an approval link shows exactly one version, and each decision stores a fingerprint of the exact content that was approved, so a later change is detectable.</li>
+        <li><strong>Money-handling code is built for two things happening at once.</strong> Sending an invoice and recording a payment run under database row locks, payments are append-only (a mistake is voided with a reason, not erased), and a unique index allows only one live invoice per quote.</li>
+        <li><strong>Zero-cost by design.</strong> One SQL dialect, PostgreSQL, runs embedded for local use or on any hosted Postgres. Email and other paid services are optional, and the app works fully without them.</li>
+        <li><strong>Review, then regression tests.</strong> Four structured review passes (after milestones 5, 8, 11, and 14) are written up in the repository's QA report. Each finding was reproduced, fixed, and given its own test, including authorization leaks in activity feeds and race conditions around invoices.</li>
+      </ul>
+
+      <h2>What shipped</h2>
+      <p>All 14 planned milestones are complete, and the project's 551 automated tests across 31 test files pass. The code is public on GitHub. Because it is a self-hosted application with its own server and database, there is no public live demo, so the screenshots here use made-up sample data. It is an operations tool, not accounting, tax, or payroll software, and the documentation says so.</p>
+
+      <h2>Skills this project shows</h2>
+      <ul>
+        <li>Relational data modeling in SQL: migrations, constraints, indexes, and transactions</li>
+        <li>Turning a business process (quote to cash) into a connected system</li>
+        <li>Role-based access control and keeping one customer's data separate from another's</li>
+        <li>Automated testing, including tests written to reproduce bugs before fixing them</li>
+        <li>Reporting, data export, backup and restore, and writing documentation for other people</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="wrap">
+      <nav class="case-nav" aria-label="More case studies">
+        <a href="second-memory.html"><small>Previous case study</small>← Second Memory</a>
+        <a class="case-next" href="../index.html#projects"><small>Back to</small>All projects →</a>
+      </nav>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p>&copy; <span id="year"></span> Michelle Feliciano. Built with plain HTML, CSS, and JavaScript — no external dependencies. Lighthouse audit, October 2026: 100 for performance, accessibility, best practices, and SEO.</p>
+    <a class="back-to-top" href="#top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>

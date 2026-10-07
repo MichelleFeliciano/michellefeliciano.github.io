@@ -676,6 +676,8 @@
     ["storage", "Browser storage and IndexedDB"],
     ["data", "Data modeling and analysis"],
     ["python", "Python"],
+    ["sql", "SQL and relational databases"],
+    ["testing", "Automated testing"],
     ["security", "Privacy and security"],
     ["deployment", "Deployment (GitHub Pages)"]
   ];

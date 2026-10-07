@@ -25,7 +25,7 @@ jobs:
       - name: Run Lighthouse on every page
         run: |
           mkdir lighthouse-reports
-          for page in index.html projects/sagebrush-sites.html projects/second-memory.html projects/health-log.html; do
+          for page in index.html projects/sagebrush-sites.html projects/second-memory.html projects/business-operations-hub.html; do
             name=$(echo "$page" | tr '/.' '--')
             npx --yes lighthouse@12 "http://localhost:5173/$page" \
               --chrome-flags="--headless=new --no-sandbox" \
