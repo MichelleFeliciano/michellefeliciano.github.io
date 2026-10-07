@@ -301,6 +301,64 @@
   }
 
   /* -------------------------------------------------------
+     Hero: leaves drift toward the pointer, and the focus line
+     briefly cycles through target roles before settling.
+  ------------------------------------------------------- */
+  var heroSection = document.querySelector(".hero");
+  if (heroSection && !reduceMotion && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    var heroFrame = false;
+    var heroEvent = null;
+    heroSection.addEventListener(
+      "pointermove",
+      function (event) {
+        heroEvent = event;
+        if (heroFrame) return;
+        heroFrame = true;
+        window.requestAnimationFrame(function () {
+          heroFrame = false;
+          var box = heroSection.getBoundingClientRect();
+          var x = ((heroEvent.clientX - box.left) / box.width - 0.5) * 2;
+          var y = ((heroEvent.clientY - box.top) / box.height - 0.5) * 2;
+          heroSection.style.setProperty("--hx", x.toFixed(3));
+          heroSection.style.setProperty("--hy", y.toFixed(3));
+        });
+      },
+      { passive: true }
+    );
+    heroSection.addEventListener("pointerleave", function () {
+      heroSection.style.setProperty("--hx", "0");
+      heroSection.style.setProperty("--hy", "0");
+    });
+  }
+
+  var focusLine = document.querySelector(".hero-focus[data-rotate]");
+  if (focusLine && !reduceMotion) {
+    var finalText = focusLine.textContent;
+    var phrases = focusLine.getAttribute("data-rotate").split("|");
+    var spanNode = document.createElement("span");
+    spanNode.className = "rotator";
+    spanNode.textContent = phrases[0];
+    focusLine.textContent = "Focused on ";
+    focusLine.appendChild(spanNode);
+
+    var phraseIndex = 0;
+    var cycle = function () {
+      spanNode.classList.add("is-out");
+      window.setTimeout(function () {
+        phraseIndex += 1;
+        if (phraseIndex >= phrases.length) {
+          focusLine.textContent = finalText;
+          return;
+        }
+        spanNode.textContent = phrases[phraseIndex];
+        spanNode.classList.remove("is-out");
+        window.setTimeout(cycle, 900);
+      }, 200);
+    };
+    window.setTimeout(cycle, 1500);
+  }
+
+  /* -------------------------------------------------------
      Scroll progress bar and header shadow
   ------------------------------------------------------- */
   var progressBar = document.createElement("div");

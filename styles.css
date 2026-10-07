@@ -1002,8 +1002,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   .leaf-cluster--bl { animation-duration: 21s; animation-delay: -7s; }
   .leaf-cluster--br { animation-duration: 18s; animation-delay: -2s; }
   @keyframes pf-sway {
-    from { rotate: -1.6deg; translate: 0 0; }
-    to { rotate: 1.6deg; translate: 0 7px; }
+    from { rotate: -1.6deg; scale: 1; }
+    to { rotate: 1.6deg; scale: 1.04; }
   }
 
   /* The card hover transitions above must not replace the reveal fade. */
@@ -1259,3 +1259,30 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .marquee-toggle:hover { border-color: var(--accent); color: var(--text); }
 @media print { .marquee { display: none !important; } }
+
+/* ---------------------------------------------------------
+   Hero: pointer-reactive leaves, photo glow, and focus line
+--------------------------------------------------------- */
+.hero-focus { margin: -4px 0 14px; font-size: 1.05rem; font-weight: 600; color: var(--text-muted); }
+.hero-focus .rotator {
+  display: inline-block;
+  color: var(--accent);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.hero-focus .rotator.is-out { opacity: 0; transform: translateY(-7px); }
+.hero-inner > :nth-child(8) { animation-delay: 0.52s; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero .leaf-cluster {
+    translate: calc(var(--hx, 0) * var(--depth, 14px)) calc(var(--hy, 0) * var(--depth, 14px));
+    transition: translate 0.6s ease-out;
+  }
+  .hero .leaf-cluster--tl { --depth: 18px; }
+  .hero .leaf-cluster--tr { --depth: 26px; }
+
+  .hero-avatar--photo { animation: pf-rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both, pf-glow 4.5s ease-in-out 1s infinite; }
+  @keyframes pf-glow {
+    0%, 100% { box-shadow: 0 0 0 4px var(--accent), 0 22px 44px -20px rgba(0, 0, 0, 0.65), 0 0 0 0 transparent; }
+    50% { box-shadow: 0 0 0 4px var(--accent), 0 22px 44px -20px rgba(0, 0, 0, 0.65), 0 0 34px 6px color-mix(in srgb, var(--accent) 38%, transparent); }
+  }
+}
