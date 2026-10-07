@@ -439,6 +439,110 @@
   }
 
   /* -------------------------------------------------------
+     Project previews: each browser mockup is a short loop of real
+     screenshots (the page's own image first, then the extras listed in
+     data-frames) that cross-fade while the card is on screen. Extra
+     frames load only after the page has settled. Skipped for reduced
+     motion, and paused while the pointer is over the mockup.
+  ------------------------------------------------------- */
+  var storyboards = Array.prototype.slice.call(document.querySelectorAll(".browser[data-frames]"));
+  if (storyboards.length && !reduceMotion && "IntersectionObserver" in window) {
+    var FRAME_MS = 2800;
+
+    var setupStoryboard = function (browser) {
+      var base = browser.querySelector("img");
+      if (!base) return;
+      var screen = document.createElement("div");
+      screen.className = "browser-screen";
+      base.parentNode.insertBefore(screen, base);
+      screen.appendChild(base);
+
+      var overlays = browser
+        .getAttribute("data-frames")
+        .split(",")
+        .map(function (src) {
+          var img = document.createElement("img");
+          img.className = "frame";
+          img.alt = "";
+          img.setAttribute("aria-hidden", "true");
+          img.width = base.width || 799;
+          img.height = base.height || 506;
+          img.decoding = "async";
+          img.src = src;
+          screen.appendChild(img);
+          return img;
+        });
+
+      var current = 0;
+      var visible = false;
+      var hovering = false;
+      var timer = null;
+
+      var show = function (index) {
+        current = index;
+        if (index === 0) {
+          overlays.forEach(function (img) {
+            img.classList.remove("is-on");
+          });
+          return;
+        }
+        overlays[index - 1].classList.add("is-on");
+        window.setTimeout(function () {
+          overlays.forEach(function (img, i) {
+            if (i !== current - 1) img.classList.remove("is-on");
+          });
+        }, 900);
+      };
+
+      var tick = function () {
+        if (!visible || hovering || document.hidden) return;
+        show((current + 1) % (overlays.length + 1));
+      };
+
+      var stage = browser.closest(".device-stage") || browser;
+      stage.addEventListener("pointerenter", function () {
+        hovering = true;
+      });
+      stage.addEventListener("pointerleave", function () {
+        hovering = false;
+      });
+
+      new IntersectionObserver(
+        function (entries) {
+          visible = entries[0].isIntersecting;
+          if (visible && timer === null) {
+            timer = window.setInterval(tick, FRAME_MS);
+          } else if (!visible && timer !== null) {
+            window.clearInterval(timer);
+            timer = null;
+          }
+        },
+        { threshold: 0.5 }
+      ).observe(browser);
+    };
+
+    var startStoryboards = function () {
+      storyboards.forEach(function (browser, i) {
+        window.setTimeout(function () {
+          setupStoryboard(browser);
+        }, i * 700);
+      });
+    };
+
+    if (root.classList.contains("is-live")) {
+      startStoryboards();
+    } else {
+      var liveWatch = new MutationObserver(function () {
+        if (root.classList.contains("is-live")) {
+          liveWatch.disconnect();
+          startStoryboards();
+        }
+      });
+      liveWatch.observe(root, { attributes: true, attributeFilter: ["class"] });
+    }
+  }
+
+  /* -------------------------------------------------------
      Scroll progress bar and header shadow
   ------------------------------------------------------- */
   var progressBar = document.createElement("div");
