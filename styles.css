@@ -1326,6 +1326,9 @@ ul { margin: 0; padding: 0; list-style: none; }
   cursor: pointer;
 }
 .accent-swatch span { position: absolute; inset: 3px; border-radius: 50%; background: var(--sw); }
+.accent-swatch[data-accent="green"] span { --sw: #3f6b34; }
+.accent-swatch[data-accent="terracotta"] span { --sw: #a8492b; }
+.accent-swatch[data-accent="blue"] span { --sw: #2c5f8a; }
 .accent-swatch[aria-pressed="true"] { border-color: var(--text); }
 .accent-swatch:hover { transform: scale(1.08); }
 @media print { .accent-picker { display: none !important; } }
@@ -1343,3 +1346,6 @@ ul { margin: 0; padding: 0; list-style: none; }
   transition: opacity 0.8s ease;
 }
 .browser-screen .frame.is-on { opacity: 1; }
+
+/* The SVG sprite that holds the shared leaf shape takes no space. */
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }

@@ -295,8 +295,23 @@
     );
 
     counters.forEach(function (node) {
+      // The animated number is purely visual. Screen readers always get the
+      // final value from a visually hidden copy, never a half-counted number.
+      var finalValue = node.getAttribute("data-count");
+      var spoken = document.createElement("span");
+      spoken.className = "sr-only";
+      spoken.textContent = finalValue;
+      node.parentNode.insertBefore(spoken, node.nextSibling);
+      node.setAttribute("aria-hidden", "true");
       node.textContent = "0";
       countObserver.observe(node);
+    });
+
+    // Printing or saving the page should never show a number mid-count.
+    window.addEventListener("beforeprint", function () {
+      counters.forEach(function (node) {
+        node.textContent = node.getAttribute("data-count");
+      });
     });
   }
 
