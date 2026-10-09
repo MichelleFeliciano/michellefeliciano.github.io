@@ -1347,5 +1347,9 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .browser-screen .frame.is-on { opacity: 1; }
 
+/* <picture> wrappers (WebP with a JPEG fallback) must not change the layout. */
+picture { display: contents; }
+picture > source { display: none; }
+
 /* The SVG sprite that holds the shared leaf shape takes no space. */
 .sprite { position: absolute; width: 0; height: 0; overflow: hidden; }

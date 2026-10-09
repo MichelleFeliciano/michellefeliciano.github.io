@@ -467,10 +467,11 @@
     var setupStoryboard = function (browser) {
       var base = browser.querySelector("img");
       if (!base) return;
+      var baseWrap = base.closest("picture") || base;
       var screen = document.createElement("div");
       screen.className = "browser-screen";
-      base.parentNode.insertBefore(screen, base);
-      screen.appendChild(base);
+      baseWrap.parentNode.insertBefore(screen, baseWrap);
+      screen.appendChild(baseWrap);
 
       var overlays = browser
         .getAttribute("data-frames")
@@ -536,11 +537,20 @@
       ).observe(browser);
     };
 
+    // Each card fetches its extra frames only once it is close to the screen.
     var startStoryboards = function () {
-      storyboards.forEach(function (browser, i) {
-        window.setTimeout(function () {
-          setupStoryboard(browser);
-        }, i * 700);
+      var nearScreen = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            nearScreen.unobserve(entry.target);
+            setupStoryboard(entry.target);
+          });
+        },
+        { rootMargin: "300px 0px" }
+      );
+      storyboards.forEach(function (browser) {
+        nearScreen.observe(browser);
       });
     };
 
