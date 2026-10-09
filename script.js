@@ -1,10 +1,37 @@
+/*
+   Portfolio behavior. Plain JavaScript, no libraries. Every feature is an enhancement:
+   the page is complete and readable with this file switched off.
+
+   Sections, in order:
+     1. Theme toggle              7. Count-up numbers
+     2. Mobile navigation         8. Hero pointer effects and rotating focus line
+     3. Active nav link           9. Accent color picker
+     4. Scroll reveal            10. Ambient animations (start after load)
+     5. Mockup tilt              11. Project preview loops
+     6. Card spotlight and       12. Scroll progress bar and timeline fill
+        skills ticker            13. Experience filter, skills matrix, contact form, footer year
+*/
 (function () {
   "use strict";
 
-  /* -------------------------------------------------------
-     Theme toggle (persisted, respects prefers-color-scheme)
-  ------------------------------------------------------- */
   var root = document.documentElement;
+
+  /* Shared checks, evaluated once */
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches; // mouse or trackpad
+  var darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+  /* Create an element with an optional class and text */
+  function makeEl(tag, className, text) {
+    var node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text) node.textContent = text;
+    return node;
+  }
+
+  /* -------------------------------------------------------
+     1. Theme toggle (saved choice, otherwise the system setting)
+  ------------------------------------------------------- */
   var themeToggle = document.getElementById("theme-toggle");
   var STORAGE_KEY = "portfolio-theme";
 
@@ -30,9 +57,7 @@
     } else {
       root.removeAttribute("data-theme");
     }
-    var isDark =
-      theme === "dark" ||
-      (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    var isDark = theme === "dark" || (!theme && darkQuery.matches);
     if (themeToggle) {
       themeToggle.setAttribute("aria-pressed", String(isDark));
       themeToggle.setAttribute(
@@ -46,11 +71,7 @@
 
   if (themeToggle) {
     themeToggle.addEventListener("click", function () {
-      var current =
-        root.getAttribute("data-theme") ||
-        (window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light");
+      var current = root.getAttribute("data-theme") || (darkQuery.matches ? "dark" : "light");
       var next = current === "dark" ? "light" : "dark";
       setStoredTheme(next);
       applyTheme(next);
@@ -58,7 +79,7 @@
   }
 
   /* -------------------------------------------------------
-     Mobile navigation
+     2. Mobile navigation (opens from the menu button below 861px)
   ------------------------------------------------------- */
   var navToggle = document.getElementById("nav-toggle");
   var mobileNav = document.getElementById("mobile-nav");
@@ -102,7 +123,7 @@
   }
 
   /* -------------------------------------------------------
-     Active nav link highlighting
+     3. Active nav link: highlight the link for the section in view
   ------------------------------------------------------- */
   var sections = document.querySelectorAll("main section[id]");
   var navLinks = document.querySelectorAll(".site-nav a, .mobile-nav a");
@@ -136,12 +157,10 @@
   }
 
   /* -------------------------------------------------------
-     Scroll reveal (progressive enhancement only — content is
+     4. Scroll reveal (progressive enhancement only — content is
      fully visible without JS; classes are added here so a
      no-JS visitor never gets opacity:0 elements)
   ------------------------------------------------------- */
-  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
   var revealTargets = Array.prototype.slice.call(
     document.querySelectorAll(
       ".project-card, .skill-card, .timeline-item, .competency-list li"
@@ -181,9 +200,10 @@
   }
 
   /* -------------------------------------------------------
-     Device mockup tilt (mouse and trackpad only)
+     5. Device mockup tilt (mouse and trackpad only). The tilt angles
+     go to the CSS as --rx / --ry.
   ------------------------------------------------------- */
-  if (!reduceMotion && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  if (!reduceMotion && finePointer) {
     Array.prototype.forEach.call(document.querySelectorAll("[data-tilt]"), function (stage) {
       var rig = stage.querySelector(".device-rig");
       if (!rig) return;
@@ -204,10 +224,11 @@
   }
 
   /* -------------------------------------------------------
-     Cursor spotlight: tell each hovered card where the pointer is
-     (the glow itself is pure CSS)
+     6a. Cursor spotlight: tell each hovered card where the pointer is
+     (--mx / --my; the glow itself is pure CSS). Work is limited to
+     once per animation frame.
   ------------------------------------------------------- */
-  if (!reduceMotion && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  if (!reduceMotion && finePointer) {
     var spotEvent = null;
     var spotFrame = false;
 
@@ -233,7 +254,7 @@
   }
 
   /* -------------------------------------------------------
-     Skills ticker. The HTML is a plain list; here it becomes a slow
+     6b. Skills ticker. The HTML is a plain list; here it becomes a slow
      scrolling band with a pause button. Skipped for reduced motion.
   ------------------------------------------------------- */
   var ticker = document.querySelector(".marquee");
@@ -263,7 +284,7 @@
   }
 
   /* -------------------------------------------------------
-     Count-up for the numbers in the at-a-glance strip
+     7. Count-up for the numbers in the at-a-glance strip
   ------------------------------------------------------- */
   var counters = Array.prototype.slice.call(document.querySelectorAll(".glance strong[data-count]"));
   if (!reduceMotion && "IntersectionObserver" in window && counters.length) {
@@ -316,11 +337,12 @@
   }
 
   /* -------------------------------------------------------
-     Hero: leaves drift toward the pointer, and the focus line
-     briefly cycles through target roles before settling.
+     8. Hero: leaves drift toward the pointer (--hx / --hy), and the
+     focus line briefly cycles through target roles before settling
+     on its final text.
   ------------------------------------------------------- */
   var heroSection = document.querySelector(".hero");
-  if (heroSection && !reduceMotion && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  if (heroSection && !reduceMotion && finePointer) {
     var heroFrame = false;
     var heroEvent = null;
     heroSection.addEventListener(
@@ -380,7 +402,7 @@
   }
 
   /* -------------------------------------------------------
-     Accent color picker. The saved choice is applied by a tiny
+     9. Accent color picker. The saved choice is applied by a tiny
      inline script in <head> (so there is no flash); this wires
      up the menu and saves new choices.
   ------------------------------------------------------- */
@@ -437,8 +459,9 @@
   }
 
   /* -------------------------------------------------------
-     Ambient animations (leaf sway, ticker, glow, pulse) start only after
-     the page has settled, so they never compete with loading.
+     10. Ambient animations (leaf sway, ticker, glow, pulse) start only
+     after the page has settled, so they never compete with loading.
+     The CSS waits for the is-live class.
   ------------------------------------------------------- */
   if (!reduceMotion) {
     var goLive = function () {
@@ -454,11 +477,12 @@
   }
 
   /* -------------------------------------------------------
-     Project previews: each browser mockup is a short loop of real
+     11. Project previews: each browser mockup is a short loop of real
      screenshots (the page's own image first, then the extras listed in
-     data-frames) that cross-fade while the card is on screen. Extra
-     frames load only after the page has settled. Skipped for reduced
-     motion, and paused while the pointer is over the mockup.
+     data-frames) that cross-fade while the card is on screen. A card's
+     extra frames are fetched only once it is near the screen (and the
+     page has settled). Skipped for reduced motion, and paused while the
+     pointer is over the mockup.
   ------------------------------------------------------- */
   var storyboards = Array.prototype.slice.call(document.querySelectorAll(".browser[data-frames]"));
   if (storyboards.length && !reduceMotion && "IntersectionObserver" in window) {
@@ -568,7 +592,8 @@
   }
 
   /* -------------------------------------------------------
-     Scroll progress bar and header shadow
+     12. Scroll progress bar, header shadow, and the timeline line that
+     fills as you scroll (--p and --tl). One update per animation frame.
   ------------------------------------------------------- */
   var progressBar = document.createElement("div");
   progressBar.className = "scroll-progress";
@@ -606,7 +631,7 @@
   onScrollFrame();
 
   /* -------------------------------------------------------
-     Experience filter. Each role carries data-tags in the HTML,
+     13a. Experience filter. Each role carries data-tags in the HTML,
      so the roles stay the single source of truth. Without JS
      every role simply shows.
   ------------------------------------------------------- */
@@ -624,17 +649,11 @@
     ];
     var activeRoleTag = null;
 
-    var mk = function (tag, className, text) {
-      var node = document.createElement(tag);
-      if (className) node.className = className;
-      if (text) node.textContent = text;
-      return node;
-    };
     var roleHasTag = function (item, tag) {
       return item.getAttribute("data-tags").split(/\s+/).indexOf(tag) !== -1;
     };
 
-    var filterBar = mk("div", "role-filters");
+    var filterBar = makeEl("div", "role-filters");
     filterBar.setAttribute("role", "group");
     filterBar.setAttribute("aria-label", "Filter roles by type of experience");
 
@@ -644,7 +663,7 @@
         ? roleItems.filter(function (item) { return roleHasTag(item, tag); }).length
         : roleItems.length;
       if (!count) return;
-      var chip = mk("button", "role-chip", label + " (" + count + ")");
+      var chip = makeEl("button", "role-chip", label + " (" + count + ")");
       chip.type = "button";
       chip.setAttribute("aria-pressed", "false");
       chip.addEventListener("click", function () {
@@ -656,7 +675,7 @@
     addChip(null, "All roles", "");
     ROLE_FILTERS.forEach(function (pair) { addChip(pair[0], pair[1], pair[2]); });
 
-    var roleStatus = mk("p", "role-status");
+    var roleStatus = makeEl("p", "role-status");
     roleStatus.setAttribute("role", "status");
     roleStatus.setAttribute("aria-live", "polite");
 
@@ -686,7 +705,7 @@
   }
 
   /* -------------------------------------------------------
-     Skills-across-projects matrix. Built entirely from the
+     13b. Skills-across-projects matrix. Built entirely from the
      data-skills / data-short attributes on the project cards
      (single source of truth), and doubles as a project filter.
      Without JS the cards simply show in full.
@@ -718,40 +737,33 @@
     });
     var activeSkill = null;
 
-    var el = function (tag, className, text) {
-      var node = document.createElement(tag);
-      if (className) node.className = className;
-      if (text) node.textContent = text;
-      return node;
-    };
-
-    var wrap = el("div", "skill-matrix");
-    wrap.appendChild(el("h3", null, "Skills across projects"));
+    var wrap = makeEl("div", "skill-matrix");
+    wrap.appendChild(makeEl("h3", null, "Skills across projects"));
     wrap.appendChild(
-      el("p", "section-note", "Select a skill to see which projects use it and filter the projects above.")
+      makeEl("p", "section-note", "Select a skill to see which projects use it and filter the projects above.")
     );
 
-    var scroller = el("div", "matrix-scroll");
+    var scroller = makeEl("div", "matrix-scroll");
     scroller.setAttribute("role", "region");
     scroller.setAttribute("aria-label", "Skills used in each project");
     scroller.tabIndex = 0;
 
-    var table = el("table", "matrix");
-    table.appendChild(el("caption", "sr-only", "Which skills each project uses"));
+    var table = makeEl("table", "matrix");
+    table.appendChild(makeEl("caption", "sr-only", "Which skills each project uses"));
 
-    var headRow = el("tr");
-    headRow.appendChild(el("th", null, "Skill")).setAttribute("scope", "col");
+    var headRow = makeEl("tr");
+    headRow.appendChild(makeEl("th", null, "Skill")).setAttribute("scope", "col");
     projectCards.forEach(function (card) {
-      var th = el("th", "matrix-col", card.getAttribute("data-short"));
+      var th = makeEl("th", "matrix-col", card.getAttribute("data-short"));
       th.setAttribute("scope", "col");
       headRow.appendChild(th);
     });
-    var usedTh = el("th", null, "Used in");
+    var usedTh = makeEl("th", null, "Used in");
     usedTh.setAttribute("scope", "col");
     headRow.appendChild(usedTh);
-    table.appendChild(el("thead")).appendChild(headRow);
+    table.appendChild(makeEl("thead")).appendChild(headRow);
 
-    var tbody = el("tbody");
+    var tbody = makeEl("tbody");
     var rows = [];
     SKILLS.forEach(function (pair) {
       var key = pair[0];
@@ -760,10 +772,10 @@
       }).length;
       if (!count) return;
 
-      var tr = el("tr");
-      var rowHead = el("th");
+      var tr = makeEl("tr");
+      var rowHead = makeEl("th");
       rowHead.setAttribute("scope", "row");
-      var btn = el("button", "matrix-skill", pair[1]);
+      var btn = makeEl("button", "matrix-skill", pair[1]);
       btn.type = "button";
       btn.setAttribute("aria-pressed", "false");
       rowHead.appendChild(btn);
@@ -771,20 +783,20 @@
 
       cardSkills.forEach(function (list) {
         var used = list.indexOf(key) !== -1;
-        var td = el("td", "matrix-cell" + (used ? " is-on" : ""));
-        td.appendChild(el("span", "matrix-dot")).setAttribute("aria-hidden", "true");
-        td.appendChild(el("span", "sr-only", used ? "Used" : "Not used"));
+        var td = makeEl("td", "matrix-cell" + (used ? " is-on" : ""));
+        td.appendChild(makeEl("span", "matrix-dot")).setAttribute("aria-hidden", "true");
+        td.appendChild(makeEl("span", "sr-only", used ? "Used" : "Not used"));
         tr.appendChild(td);
       });
 
-      var total = el("td", "matrix-total");
-      var bar = el("span", "matrix-bar");
-      var fill = el("span", "matrix-fill");
+      var total = makeEl("td", "matrix-total");
+      var bar = makeEl("span", "matrix-bar");
+      var fill = makeEl("span", "matrix-fill");
       fill.style.width = Math.round((count / projectCards.length) * 100) + "%";
       bar.appendChild(fill);
       bar.setAttribute("aria-hidden", "true");
       total.appendChild(bar);
-      total.appendChild(el("span", "matrix-count", count + " of " + projectCards.length));
+      total.appendChild(makeEl("span", "matrix-count", count + " of " + projectCards.length));
       tr.appendChild(total);
 
       tbody.appendChild(tr);
@@ -794,13 +806,13 @@
     scroller.appendChild(table);
     wrap.appendChild(scroller);
 
-    var status = el("p", "matrix-status");
+    var status = makeEl("p", "matrix-status");
     status.setAttribute("role", "status");
     status.setAttribute("aria-live", "polite");
-    var reset = el("button", "btn btn-ghost matrix-reset", "Show all projects");
+    var reset = makeEl("button", "btn btn-ghost matrix-reset", "Show all projects");
     reset.type = "button";
     reset.hidden = true;
-    var footer = el("div", "matrix-footer");
+    var footer = makeEl("div", "matrix-footer");
     footer.appendChild(status);
     footer.appendChild(reset);
     wrap.appendChild(footer);
@@ -818,8 +830,9 @@
         row.btn.setAttribute("aria-pressed", String(on));
         row.tr.classList.toggle("is-active", on);
       });
-      var cols = table.querySelectorAll("tbody tr");
-      Array.prototype.forEach.call(cols, function (tr) {
+      // Dim the dots of every project that does not use the chosen skill
+      var bodyRows = table.querySelectorAll("tbody tr");
+      Array.prototype.forEach.call(bodyRows, function (tr) {
         Array.prototype.forEach.call(tr.querySelectorAll(".matrix-cell"), function (td, i) {
           td.classList.toggle("is-dim", !!skill && cardSkills[i].indexOf(skill) === -1);
         });
@@ -848,7 +861,7 @@
   }
 
   /* -------------------------------------------------------
-     Contact form. No server: it builds a mailto: link, so the
+     13c. Contact form. No server: it builds a mailto: link, so the
      message goes through the visitor's own email app. The form
      is hidden in the HTML and shown here, so it never appears
      as a dead control when JavaScript is off.
@@ -948,7 +961,7 @@
   }
 
   /* -------------------------------------------------------
-     Footer year
+     13d. Footer year
   ------------------------------------------------------- */
   var yearEl = document.getElementById("year");
   if (yearEl) {

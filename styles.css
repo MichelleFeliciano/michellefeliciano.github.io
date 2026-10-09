@@ -26,6 +26,10 @@
   color-scheme: light;
 }
 
+/* Custom properties that script.js sets while the page runs (so they are not defined above):
+   --p scroll progress, --tl timeline fill, --d reveal delay, --rx / --ry mockup tilt,
+   --mx / --my card spotlight position, --hx / --hy hero pointer offset. */
+
 :root[data-theme="dark"] {
   --bg: #12160e;
   --bg-alt: #181d12;
@@ -95,12 +99,32 @@ body {
 
 img, svg { max-width: 100%; display: block; }
 
+/* <picture> wrappers (WebP with a JPEG fallback) must not change the layout. */
+picture { display: contents; }
+picture > source { display: none; }
+
 a { color: var(--accent); }
 
 h1, h2, h3 { line-height: 1.2; margin: 0 0 0.5em; }
 p { margin: 0 0 1em; }
 
 ul { margin: 0; padding: 0; list-style: none; }
+
+/* Text for screen readers only (visually hidden) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* The SVG sprite that holds the shared leaf shape takes no space. */
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
 
 .wrap {
   max-width: var(--max-width);
@@ -141,6 +165,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   background: color-mix(in srgb, var(--bg-alt) 92%, transparent);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--border);
+  transition: box-shadow 0.25s ease; /* fades in the shadow once the page is scrolled */
+  view-transition-name: site-header; /* keeps the header still during page-to-page transitions */
 }
 
 .header-inner {
@@ -152,6 +178,9 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 
 .brand {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px; /* taller tap area; the width is left alone so the nav stays centered */
   font-weight: 800;
   font-size: 1.25rem;
   text-decoration: none;
@@ -222,6 +251,11 @@ ul { margin: 0; padding: 0; list-style: none; }
   display: none;
   border-top: 1px solid var(--border);
   background: var(--bg-alt);
+  /* On a short screen (phone held sideways) the menu scrolls instead of running off the bottom */
+  max-height: calc(100vh - 70px);
+  max-height: calc(100dvh - 70px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 .mobile-nav ul { padding: 12px 24px 20px; display: flex; flex-direction: column; gap: 4px; }
 .mobile-nav a {
@@ -278,8 +312,6 @@ ul { margin: 0; padding: 0; list-style: none; }
   aspect-ratio: 100 / 140;
   flex-shrink: 0;
 }
-.heading-leaf .leaf-blade { fill: var(--accent); }
-.heading-leaf .leaf-vein { stroke: var(--accent-contrast); opacity: 0.5; }
 
 @media (max-width: 600px) {
   .leaf-cluster { width: clamp(120px, 34vw, 200px); }
@@ -296,20 +328,18 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
 
+/* Headshot in a leaf-shaped crop */
 .hero-avatar {
-  width: 92px;
-  height: 92px;
-  border-radius: 50%;
-  background: var(--accent);
-  color: var(--accent-contrast);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 1.6rem;
-  letter-spacing: -0.02em;
+  width: 152px;
+  height: 152px;
   margin-bottom: 24px;
+  overflow: hidden;
+  background: var(--accent-soft);
+  border-radius: 10% 64%; /* leaf shape: two opposite rounded corners */
+  box-shadow: 0 0 0 4px var(--accent), 0 22px 44px -20px rgba(0, 0, 0, 0.65);
 }
+.hero-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+@media (max-width: 600px) { .hero-avatar { width: 128px; height: 128px; } }
 
 .eyebrow {
   text-transform: uppercase;
@@ -355,8 +385,12 @@ ul { margin: 0; padding: 0; list-style: none; }
   font-size: 0.95rem;
   border: 1px solid transparent;
   min-height: 24px;
+  max-width: 100%;
+  overflow-wrap: anywhere; /* a long label (the email address) wraps rather than overflowing small screens */
   cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
 }
+.btn .icon { flex-shrink: 0; } /* keep the icon full size when the label wraps */
 .btn-primary {
   background: var(--accent);
   color: var(--accent-contrast);
@@ -431,6 +465,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 22px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
 }
 .skill-card h3 { font-size: 1rem; margin-bottom: 14px; }
 .tag-list { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -460,6 +495,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   border-radius: var(--radius);
   padding: 26px;
   box-shadow: var(--shadow);
+  overflow: hidden; /* clips the mockup banner to the card's rounded corners */
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 .project-tag {
   display: inline-block;
@@ -485,14 +522,10 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .project-links a:hover,
 .project-links a:focus-visible { text-decoration: underline; }
-.project-links-pending {
-  color: var(--text-muted);
-  font-style: italic;
-  font-size: 0.9rem;
-}
 
 /* Timeline (Education & Experience) */
 .timeline {
+  list-style: none;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -539,7 +572,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .timeline-badge {
   display: inline-block;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
   background: var(--accent-soft);
@@ -597,75 +630,6 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 
 /* ---------------------------------------------------------
-   Print (Download Résumé button triggers window.print()) —
-   turns the page into a clean, single-column, ink-friendly
-   resume regardless of the active light/dark theme.
---------------------------------------------------------- */
-@media print {
-  @page { margin: 0.6in; }
-
-  .no-print,
-  .site-header,
-  .leaf-cluster,
-  .heading-leaf,
-  .hero-cta,
-  .hero-avatar,
-  .eyebrow,
-  .skip-link,
-  .site-footer .footer-inner .back-to-top {
-    display: none !important;
-  }
-
-  html, body {
-    background: #ffffff !important;
-    color: #111111 !important;
-  }
-
-  .section, .section-alt, .hero {
-    background: transparent !important;
-    border: none !important;
-    padding-block: 14px !important;
-  }
-
-  .hero { text-align: left; padding-top: 0 !important; }
-  .hero-lede { color: #222222 !important; max-width: none; }
-
-  a { color: #111111 !important; text-decoration: underline; }
-
-  .section h2 {
-    color: #111111 !important;
-    border-bottom: 1px solid #999999;
-    padding-bottom: 4px;
-  }
-  .section-index { color: #444444 !important; }
-
-  .about-grid,
-  .skills-grid,
-  .project-grid {
-    display: block !important;
-  }
-  .competency-list { flex-direction: row; flex-wrap: wrap; gap: 8px; }
-  .competency-list li,
-  .skill-card,
-  .project-card {
-    background: transparent !important;
-    border: 1px solid #cccccc !important;
-    box-shadow: none !important;
-    break-inside: avoid;
-  }
-
-  .timeline { border-left-color: #999999 !important; }
-  .timeline-marker { background: #111111 !important; border-color: #ffffff !important; }
-  .timeline-item { break-inside: avoid; }
-
-  .tag { background: transparent !important; border: 1px solid #cccccc !important; color: #111111 !important; }
-
-  .btn { border: 1px solid #999999 !important; color: #111111 !important; background: transparent !important; }
-
-  .contact-wrap { text-align: left; }
-}
-
-/* ---------------------------------------------------------
    Case-study pages
 --------------------------------------------------------- */
 .breadcrumb { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 14px; }
@@ -705,6 +669,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .case-figure { margin: 0; }
 .case-figure img {
   width: 100%;
+  max-width: 799px; /* the screenshot's real width: larger would look blurry */
   height: auto;
   border-radius: var(--radius);
   border: 1px solid var(--border);
@@ -756,25 +721,9 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 .project-card .case-link { font-weight: 700; }
 
-@media print {
-  .case-nav, .breadcrumb { display: none !important; }
-}
-
 /* ---------------------------------------------------------
    Skills-across-projects matrix (built by script.js)
 --------------------------------------------------------- */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
 .skill-matrix { margin-top: 56px; }
 .skill-matrix h3 { font-size: 1.3rem; margin-bottom: 6px; }
 .skill-matrix .section-note { margin-bottom: 18px; }
@@ -844,10 +793,6 @@ ul { margin: 0; padding: 0; list-style: none; }
 .matrix-status { margin: 0; color: var(--text-muted); font-size: 0.92rem; }
 .matrix-reset { padding: 8px 16px; }
 
-@media print {
-  .skill-matrix { display: none !important; }
-}
-
 .matrix-reset[hidden] { display: none; }
 
 /* ---------------------------------------------------------
@@ -863,7 +808,6 @@ ul { margin: 0; padding: 0; list-style: none; }
   border-radius: var(--radius);
   box-shadow: var(--shadow);
 }
-.contact-form[hidden] { display: none; }
 .contact-form h3 { font-size: 1.15rem; margin-bottom: 6px; }
 .form-help { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 18px; }
 
@@ -891,12 +835,11 @@ ul { margin: 0; padding: 0; list-style: none; }
   font-weight: 600;
   margin-bottom: 14px;
 }
-.form-error[hidden] { display: none; }
 .form-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 .form-status { color: var(--text-muted); font-size: 0.92rem; margin: 14px 0 0; min-height: 1.4em; }
 
 /* ---------------------------------------------------------
-   Polish: "Now" line and cross-page transitions
+   Hero "Now" line and cross-page transitions
 --------------------------------------------------------- */
 .hero-now {
   display: inline-flex;
@@ -931,30 +874,22 @@ ul { margin: 0; padding: 0; list-style: none; }
   .hero-now { border-radius: var(--radius); }
 }
 
-.site-header { view-transition-name: site-header; }
 @media (prefers-reduced-motion: no-preference) {
   @view-transition { navigation: auto; }
   ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.25s; }
 }
 
-@media print {
-  .hero-now { display: none !important; }
-}
-
 /* ---------------------------------------------------------
-   Motion and polish (restrained). Animated parts are wrapped in
+   Hover effects, scroll progress bar, and entrance animations.
+   Anything that moves on its own is wrapped in
    prefers-reduced-motion: no-preference.
 --------------------------------------------------------- */
-.btn { transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, opacity 0.2s ease; }
 .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px -14px rgba(20, 30, 15, 0.55); }
 .btn:active { transform: none; box-shadow: none; }
 
-.project-card { transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; }
 .project-card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 2px 4px rgba(20, 30, 15, 0.05), 0 18px 36px -14px rgba(20, 30, 15, 0.22); }
-.skill-card { transition: transform 0.2s ease, border-color 0.2s ease; }
 .skill-card:hover { transform: translateY(-3px); border-color: var(--accent); }
 
-.site-header { transition: box-shadow 0.25s ease; }
 .site-header.is-scrolled { box-shadow: 0 10px 28px -22px rgba(20, 30, 15, 0.55); }
 
 .scroll-progress {
@@ -978,6 +913,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   .hero-inner > :nth-child(5) { animation-delay: 0.28s; }
   .hero-inner > :nth-child(6) { animation-delay: 0.36s; }
   .hero-inner > :nth-child(7) { animation-delay: 0.44s; }
+  .hero-inner > :nth-child(8) { animation-delay: 0.52s; }
   @keyframes pf-rise {
     from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: none; }
@@ -994,17 +930,12 @@ ul { margin: 0; padding: 0; list-style: none; }
     to { rotate: 1.6deg; scale: 1.04; }
   }
 
-  /* The card hover transitions above must not replace the reveal fade. */
-  .project-card.reveal, .skill-card.reveal {
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
   .reveal { transition-delay: var(--d, 0s); }
 }
 
 /* ---------------------------------------------------------
    Project mockups (desktop + phone) at the top of each card
 --------------------------------------------------------- */
-.project-card { overflow: hidden; }
 .device-stage {
   position: relative;
   margin: -26px -26px 22px;
@@ -1064,7 +995,6 @@ ul { margin: 0; padding: 0; list-style: none; }
   transform: translateZ(44px);
 }
 .phone img { width: 100%; height: auto; border-radius: 10px; }
-@media print { .device-stage { display: none !important; } }
 
 /* ---------------------------------------------------------
    At-a-glance strip under the hero
@@ -1097,12 +1027,10 @@ ul { margin: 0; padding: 0; list-style: none; }
 @media (max-width: 760px) {
   .glance { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 28px; }
 }
-@media print { .glance { display: none !important; } }
 
 /* ---------------------------------------------------------
    Timeline: scroll-filled line and role filter
 --------------------------------------------------------- */
-.timeline { list-style: none; }
 .timeline::after {
   content: "";
   position: absolute;
@@ -1113,7 +1041,6 @@ ul { margin: 0; padding: 0; list-style: none; }
   background: var(--accent);
   pointer-events: none;
 }
-.timeline-item[hidden] { display: none; }
 
 .role-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; }
 .role-chip {
@@ -1131,27 +1058,6 @@ ul { margin: 0; padding: 0; list-style: none; }
 .role-chip:hover { border-color: var(--accent); transform: translateY(-1px); }
 .role-chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-contrast); }
 .role-status { margin: 0 0 26px; min-height: 1.4em; color: var(--text-muted); font-size: 0.92rem; }
-
-@media print {
-  .role-filters, .role-status { display: none !important; }
-  .timeline::after { display: none !important; }
-  .timeline-item[hidden] { display: block !important; }
-}
-
-/* ---------------------------------------------------------
-   Headshot in a leaf-shaped crop
---------------------------------------------------------- */
-.hero-avatar--photo {
-  width: 152px;
-  height: 152px;
-  overflow: hidden;
-  padding: 0;
-  background: var(--accent-soft);
-  border-radius: 10% 64% 10% 64%;
-  box-shadow: 0 0 0 4px var(--accent), 0 22px 44px -20px rgba(0, 0, 0, 0.65);
-}
-.hero-avatar--photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
-@media (max-width: 600px) { .hero-avatar--photo { width: 128px; height: 128px; } }
 
 /* ---------------------------------------------------------
    Cursor spotlight on cards (mouse and trackpad only)
@@ -1174,7 +1080,6 @@ ul { margin: 0; padding: 0; list-style: none; }
   .skill-card:hover::after,
   .glance li:hover::after { opacity: 1; }
 }
-@media print { .project-card::after, .skill-card::after, .glance li::after { display: none !important; } }
 
 /* ---------------------------------------------------------
    Skills ticker (a static wrapped list unless JS enables it)
@@ -1246,17 +1151,15 @@ ul { margin: 0; padding: 0; list-style: none; }
   cursor: pointer;
 }
 .marquee-toggle:hover { border-color: var(--accent); color: var(--text); }
-@media print { .marquee { display: none !important; } }
 
 /* ---------------------------------------------------------
-   Hero: pointer-reactive leaves, photo glow, and focus line
+   Hero: rotating focus line, pointer-reactive leaves, photo glow
 --------------------------------------------------------- */
 .hero-focus { margin: -4px 0 14px; font-size: 1.05rem; font-weight: 600; color: var(--text-muted); }
 .hero-focus .rotator-clip { display: inline-block; height: 1.5em; line-height: 1.5; overflow: hidden; vertical-align: bottom; }
 .hero-focus .rotator { display: block; color: var(--accent); transition: transform 0.22s ease; }
 .hero-focus .rotator.is-out { transform: translateY(-110%); }
 .hero-focus .rotator.is-pre { transform: translateY(110%); transition: none; }
-.hero-inner > :nth-child(8) { animation-delay: 0.52s; }
 
 @media (prefers-reduced-motion: no-preference) {
   .hero .leaf-cluster {
@@ -1266,8 +1169,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   .hero .leaf-cluster--tl { --depth: 18px; }
   .hero .leaf-cluster--tr { --depth: 26px; }
 
-  .hero-avatar--photo { animation: pf-rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
-  .is-live .hero-avatar--photo { animation: pf-glow 4.5s ease-in-out 3; }
+  .hero-avatar { animation: pf-rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+  .is-live .hero-avatar { animation: pf-glow 4.5s ease-in-out 3; }
   @keyframes pf-glow {
     0%, 100% { box-shadow: 0 0 0 4px var(--accent), 0 22px 44px -20px rgba(0, 0, 0, 0.65), 0 0 0 0 transparent; }
     50% { box-shadow: 0 0 0 4px var(--accent), 0 22px 44px -20px rgba(0, 0, 0, 0.65), 0 0 34px 6px color-mix(in srgb, var(--accent) 38%, transparent); }
@@ -1335,7 +1238,6 @@ ul { margin: 0; padding: 0; list-style: none; }
 .accent-swatch[data-accent="blue"] span { --sw: #2c5f8a; }
 .accent-swatch[aria-pressed="true"] { border-color: var(--text); }
 .accent-swatch:hover { transform: scale(1.08); }
-@media print { .accent-picker { display: none !important; } }
 
 /* ---------------------------------------------------------
    Project previews: looping screenshot frames in the mockups
@@ -1351,9 +1253,87 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .browser-screen .frame.is-on { opacity: 1; }
 
-/* <picture> wrappers (WebP with a JPEG fallback) must not change the layout. */
-picture { display: contents; }
-picture > source { display: none; }
+/* ---------------------------------------------------------
+   Print. The "Download Résumé" button calls window.print(), so the page turns into a
+   clean, single-column, ink-friendly résumé whatever theme is active.
+--------------------------------------------------------- */
+@media print {
+  @page { margin: 0.6in; }
 
-/* The SVG sprite that holds the shared leaf shape takes no space. */
-.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+  /* Hidden on paper: navigation, decoration, and controls that do nothing in print */
+  .no-print,
+  .site-header,
+  .leaf-cluster,
+  .heading-leaf,
+  .hero-cta,
+  .hero-avatar,
+  .hero-now,
+  .eyebrow,
+  .skip-link,
+  .glance,
+  .marquee,
+  .accent-picker,
+  .device-stage,
+  .skill-matrix,
+  .role-filters,
+  .role-status,
+  .timeline::after,
+  .case-nav,
+  .breadcrumb,
+  .project-card::after,
+  .skill-card::after,
+  .glance li::after,
+  .site-footer .footer-inner .back-to-top {
+    display: none !important;
+  }
+
+  /* Plain black on white */
+  html, body {
+    background: #ffffff !important;
+    color: #111111 !important;
+  }
+
+  .section, .section-alt, .hero {
+    background: transparent !important;
+    border: none !important;
+    padding-block: 14px !important;
+  }
+
+  .hero { text-align: left; padding-top: 0 !important; }
+  .hero-lede { color: #222222 !important; max-width: none; }
+
+  a { color: #111111 !important; text-decoration: underline; }
+
+  .section h2 {
+    color: #111111 !important;
+    border-bottom: 1px solid #999999;
+    padding-bottom: 4px;
+  }
+  .section-index { color: #444444 !important; }
+
+  /* Grids become stacked blocks; cards lose their fills and never split across pages */
+  .about-grid,
+  .skills-grid,
+  .project-grid {
+    display: block !important;
+  }
+  .competency-list { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+  .competency-list li,
+  .skill-card,
+  .project-card {
+    background: transparent !important;
+    border: 1px solid #cccccc !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+
+  /* Experience: show every role, even ones the on-screen filter has hidden */
+  .timeline { border-left-color: #999999 !important; }
+  .timeline-marker { background: #111111 !important; border-color: #ffffff !important; }
+  .timeline-item { break-inside: avoid; }
+  .timeline-item[hidden] { display: block !important; }
+
+  .tag { background: transparent !important; border: 1px solid #cccccc !important; color: #111111 !important; }
+  .btn { border: 1px solid #999999 !important; color: #111111 !important; background: transparent !important; }
+  .contact-wrap { text-align: left; }
+}

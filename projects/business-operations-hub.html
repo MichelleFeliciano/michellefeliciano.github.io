@@ -17,8 +17,10 @@
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<!-- Applies the saved accent color before the page paints, so there is no color flash. -->
 <script>try{var a=localStorage.getItem("portfolio-accent");if(a==="terracotta"||a==="blue")document.documentElement.setAttribute("data-accent",a)}catch(e){}</script>
 <link rel="stylesheet" href="../styles.css">
+<!-- Structured data for search engines: this case study as an article. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -34,6 +36,7 @@
 <body id="top">
 <a class="skip-link" href="#main">Skip to main content</a>
 
+<!-- Header: brand, desktop navigation, and the accent / theme / menu buttons. -->
 <header class="site-header">
   <div class="wrap header-inner">
     <a class="brand" href="../index.html#top">MF<span class="brand-dot">.</span></a>
@@ -70,6 +73,7 @@
     </div>
   </div>
 
+  <!-- Mobile menu: hidden until the menu button is pressed (script.js). -->
   <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden>
     <ul>
       <li><a href="../index.html#about">About</a></li>
@@ -84,6 +88,7 @@
 
 <main id="main">
 
+  <!-- Case study header: breadcrumb, title, summary, key facts, and links. -->
   <section class="section case-hero">
     <div class="wrap">
       <nav class="breadcrumb" aria-label="Breadcrumb">
@@ -105,6 +110,7 @@
     </div>
   </section>
 
+  <!-- Screenshot of the project. -->
   <section class="section section-alt">
     <div class="wrap">
       <figure class="case-figure">
@@ -114,6 +120,7 @@
     </div>
   </section>
 
+  <!-- The write-up: the goal, what I built, decisions that mattered, what shipped, and skills shown. -->
   <section class="section">
     <div class="wrap case-body">
       <h2>The goal</h2>
@@ -153,6 +160,7 @@
     </div>
   </section>
 
+  <!-- Links to the other case studies. -->
   <section class="section section-alt">
     <div class="wrap">
       <nav class="case-nav" aria-label="More case studies">
@@ -164,6 +172,7 @@
 
 </main>
 
+<!-- Footer. -->
 <footer class="site-footer">
   <div class="wrap footer-inner">
     <p>&copy; <span id="year"></span> Michelle Feliciano. Built with plain HTML, CSS, and JavaScript — no external dependencies. Lighthouse audit, October 2026: 100 for accessibility, best practices, and SEO, and 97 to 100 for performance.</p>
@@ -171,6 +180,7 @@
   </div>
 </footer>
 
+<!-- All page behavior (see the list at the top of ../script.js). -->
 <script src="../script.js"></script>
 </body>
 </html>
