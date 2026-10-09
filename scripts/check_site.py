@@ -109,7 +109,11 @@ def main():
             parsed = urlparse(value)
             if parsed.scheme or value.startswith(("//", "mailto:", "tel:")):
                 continue
-            target = f if not parsed.path else (f.parent / unquote(parsed.path)).resolve()
+            if parsed.path.startswith("/"):
+                # Root-absolute paths (404.html uses them, since it is served from any folder depth)
+                target = (ROOT / unquote(parsed.path.lstrip("/"))).resolve()
+            else:
+                target = f if not parsed.path else (f.parent / unquote(parsed.path)).resolve()
             if target.is_dir():
                 target = target / "index.html"
             if not target.exists():

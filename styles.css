@@ -1255,6 +1255,13 @@ ul { margin: 0; padding: 0; list-style: none; }
 .browser-screen .frame.is-on { opacity: 1; }
 
 /* ---------------------------------------------------------
+   404 page
+--------------------------------------------------------- */
+.not-found { text-align: center; padding-block: 120px; }
+.not-found h1 { font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.03em; }
+.not-found-text { color: var(--text-muted); max-width: 520px; margin-inline: auto; }
+
+/* ---------------------------------------------------------
    Windows high-contrast ("forced colors") mode. The system replaces background colors, so
    anything that was shown only by a fill gets a system-color fill or border instead.
 --------------------------------------------------------- */

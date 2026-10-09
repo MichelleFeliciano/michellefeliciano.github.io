@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page not found — Michelle Feliciano</title>
+<meta name="description" content="This page does not exist. Head back to Michelle Feliciano's portfolio.">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#3f6b34">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#12160e">
+<!-- GitHub Pages shows this file for any address that does not exist, at any folder depth,
+     so every path below starts with "/" instead of being relative. -->
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<!-- Applies the saved accent color before the page paints, so there is no color flash. -->
+<script>try{var a=localStorage.getItem("portfolio-accent");if(a==="terracotta"||a==="blue")document.documentElement.setAttribute("data-accent",a)}catch(e){}</script>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<!-- Header: brand and the theme button only. -->
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/">MF<span class="brand-dot">.</span></a>
+    <div class="header-actions">
+      <button id="theme-toggle" class="icon-btn" type="button" aria-pressed="false" aria-label="Switch to dark theme">
+        <svg class="icon icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79Z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="section not-found">
+    <div class="wrap">
+      <p class="eyebrow">Error 404</p>
+      <h1>That page does not exist</h1>
+      <p class="not-found-text">The link may be old or mistyped. These will get you back on track.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="/">Back to the portfolio</a>
+        <a class="btn btn-ghost" href="/#projects">See my projects</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p>&copy; <span id="year"></span> Michelle Feliciano.</p>
+  </div>
+</footer>
+
+<!-- Theme button and footer year (see the list at the top of script.js). -->
+<script src="/script.js"></script>
+</body>
+</html>
