@@ -69,6 +69,16 @@
 
   applyTheme(getStoredTheme());
 
+  // While no theme has been chosen, follow the system setting live (the button label depends on it)
+  function onSystemThemeChange() {
+    if (!root.getAttribute("data-theme")) applyTheme(null);
+  }
+  if (darkQuery.addEventListener) {
+    darkQuery.addEventListener("change", onSystemThemeChange);
+  } else if (darkQuery.addListener) {
+    darkQuery.addListener(onSystemThemeChange); // older Safari
+  }
+
   if (themeToggle) {
     themeToggle.addEventListener("click", function () {
       var current = root.getAttribute("data-theme") || (darkQuery.matches ? "dark" : "light");
@@ -113,6 +123,18 @@
     mobileNav.querySelectorAll("a").forEach(function (link) {
       link.addEventListener("click", closeMobileNav);
     });
+
+    // Growing past the phone layout (resize or rotate) closes a menu that was left open,
+    // so it does not reappear open, and aria-expanded stays truthful
+    var desktopQuery = window.matchMedia("(min-width: 861px)");
+    var onBreakpointChange = function (event) {
+      if (event.matches) closeMobileNav();
+    };
+    if (desktopQuery.addEventListener) {
+      desktopQuery.addEventListener("change", onBreakpointChange);
+    } else if (desktopQuery.addListener) {
+      desktopQuery.addListener(onBreakpointChange); // older Safari
+    }
 
     document.addEventListener("keydown", function (event) {
       if (event.key === "Escape" && !mobileNav.hidden) {
@@ -292,6 +314,7 @@
       var target = Number(node.getAttribute("data-count"));
       var startTime = null;
       var step = function (now) {
+        if (node.hasAttribute("data-printed")) return; // printing already set the final value
         if (startTime === null) startTime = now;
         var progress = Math.min(1, (now - startTime) / 1100);
         node.textContent = String(Math.round(target * (1 - Math.pow(1 - progress, 3))));
@@ -331,6 +354,7 @@
     // Printing or saving the page should never show a number mid-count.
     window.addEventListener("beforeprint", function () {
       counters.forEach(function (node) {
+        node.setAttribute("data-printed", ""); // stops a count-up that is still running
         node.textContent = node.getAttribute("data-count");
       });
     });
@@ -452,6 +476,11 @@
       if (!accentMenu.hidden && !accentMenu.contains(event.target) && !accentToggle.contains(event.target)) {
         closeAccentMenu(false);
       }
+    });
+    // Tabbing out of the picker closes it too
+    accentToggle.parentNode.addEventListener("focusout", function (event) {
+      var next = event.relatedTarget;
+      if (!accentMenu.hidden && next && !accentToggle.parentNode.contains(next)) closeAccentMenu(false);
     });
     document.addEventListener("keydown", function (event) {
       if (event.key === "Escape" && !accentMenu.hidden) closeAccentMenu(true);
