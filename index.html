@@ -54,7 +54,7 @@
         { "@type": "CollegeOrUniversity", "name": "University of North Texas" },
         { "@type": "CollegeOrUniversity", "name": "Tarrant County College" }
       ],
-      "knowsAbout": ["Business systems", "Web development", "TypeScript", "Progressive web apps", "Database systems", "Data analysis", "Automated testing", "IT support", "Accessibility"],
+      "knowsAbout": ["Business systems", "Web development", "TypeScript", "React", "Node.js", "Progressive web apps", "Database systems", "Data analysis", "Automated testing", "IT support", "Accessibility"],
       "sameAs": [
         "https://www.linkedin.com/in/michelle-felicianowebdev",
         "https://github.com/MichelleFeliciano"
@@ -166,11 +166,11 @@
         <a class="btn btn-ghost" href="#contact">Get in Touch</a>
       </div>
       <!-- Current status line. -->
-      <p class="hero-now"><span class="now-dot" aria-hidden="true"></span><span><strong>Now:</strong> open to entry-level roles in Texas (on-site, hybrid, or remote) &middot; building <a href="projects/second-memory.html">Second Memory</a> and the <a href="projects/business-operations-hub.html">Business Operations Hub</a> <span class="now-date">&middot; updated October 2026</span></span></p>
+      <p class="hero-now"><span class="now-dot" aria-hidden="true"></span><span><strong>Now:</strong> open to entry-level roles in Texas (on-site, hybrid, or remote) &middot; building <a href="projects/second-memory.html">Second Memory</a> and more personal apps <span class="now-date">&middot; updated October 2026</span></span></p>
       <!-- At-a-glance facts (the numbers count up in script.js). -->
       <ul class="glance" aria-label="At a glance">
         <li><strong>B.S.</strong><span>Business Computer Information Systems, University of North Texas, 2025</span></li>
-        <li><strong data-count="9">9</strong><span>Projects built from scratch, six of them live on the web</span></li>
+        <li><strong data-count="7">7</strong><span>Personal projects built from scratch, five of them live on the web</span></li>
         <li><strong data-count="100">100</strong><span>Lighthouse accessibility, best practices, and SEO score on every page (performance 97 to 100)</span></li>
         <li><strong>0</strong><span>External dependencies: plain HTML, CSS, and JavaScript</span></li>
       </ul>
@@ -195,6 +195,8 @@
       <li>Data visualization</li>
       <li>Systems development</li>
       <li>Automated testing</li>
+      <li>Node.js</li>
+      <li>Git and GitHub</li>
       <li>IT support</li>
       <li>Accessibility</li>
       <li>Responsive design</li>
@@ -289,7 +291,34 @@
             <li class="tag">CSS</li>
             <li class="tag">JavaScript</li>
             <li class="tag">React</li>
+            <li class="tag">Next.js</li>
+            <li class="tag">Node.js</li>
             <li class="tag">Progressive Web Apps</li>
+            <li class="tag">Service Workers</li>
+          </ul>
+        </div>
+        <div class="skill-card">
+          <h3>Data &amp; Storage</h3>
+          <ul class="tag-list">
+            <li class="tag">SQLite &amp; libSQL</li>
+            <li class="tag">Cloudflare D1</li>
+            <li class="tag">IndexedDB</li>
+            <li class="tag">Browser Storage</li>
+            <li class="tag">Data Modeling</li>
+            <li class="tag">Backup &amp; Restore</li>
+          </ul>
+        </div>
+        <div class="skill-card">
+          <h3>Tools &amp; Platforms</h3>
+          <ul class="tag-list">
+            <li class="tag">Git &amp; GitHub</li>
+            <li class="tag">GitHub Actions</li>
+            <li class="tag">GitHub Pages</li>
+            <li class="tag">Vercel</li>
+            <li class="tag">Cloudflare Workers</li>
+            <li class="tag">Vite</li>
+            <li class="tag">Vitest</li>
+            <li class="tag">Playwright</li>
           </ul>
         </div>
         <div class="skill-card">
@@ -314,31 +343,9 @@
   <section id="projects" class="section section-alt">
     <div class="wrap">
       <h2><svg class="heading-leaf" viewBox="0 0 100 140" aria-hidden="true"><use href="#leaf-shape"></use></svg><span class="section-index">04</span> Projects</h2>
-      <p class="section-note">Hands-on builds spanning full-stack development, data, and web design — each taken from concept through to a working result.</p>
+      <p class="section-note">Personal projects spanning full-stack development, data, and web design — each taken from concept through to a working result.</p>
       <!-- data-skills feeds the skills matrix, data-short is its column label, and data-frames lists the extra screenshots for the preview loop. -->
       <div class="project-grid">
-        <article class="project-card" data-short="Sagebrush" data-skills="html css javascript responsive accessibility deployment">
-          <div class="device-stage" data-tilt>
-            <div class="device-rig">
-              <div class="browser" data-frames="images/frame-sagebrush-2.webp,images/frame-sagebrush-3.webp">
-                <div class="browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>sagebrushsites.com</span></div>
-                <picture><source srcset="images/sagebrush-sites.webp" type="image/webp"><img src="images/sagebrush-sites.jpg" width="799" height="506" alt="Home page of the Sagebrush Sites website on a desktop: a cream background, a leaf logo, and the headline “Websites for salons and beauty businesses that turn browsers into booked appointments.”" loading="lazy"></picture>
-              </div>
-              <div class="phone"><picture><source srcset="images/phone-sagebrush.webp" type="image/webp"><img src="images/phone-sagebrush.jpg" width="260" height="563" alt="" loading="lazy"></picture></div>
-            </div>
-          </div>
-          <p class="project-tag">Personal project</p>
-          <h3>Sagebrush Sites — Web Development for Salons &amp; Beauty Businesses</h3>
-          <p class="project-date">September – October 2026</p>
-          <p><strong>Goal:</strong> design and launch a freelance web-studio brand for salons and beauty businesses, from positioning through a deployed site.</p>
-          <p><strong>What I built:</strong> a live, hand-coded, mobile-first multi-page website (Home, Work, Process, About, Skills, Free Website Check, Contact) on a custom domain, with four concept case studies — spec work for fictional clients, built to demonstrate craft rather than list real customers — plus a client-intake questionnaire and a reusable portfolio template shared with fellow students. Later passes fixed contrast, keyboard, and tap-target problems and switched images to WebP.</p>
-          <p><strong>Stack:</strong> HTML, CSS, JavaScript, zero external dependencies.</p>
-          <p class="project-links">
-            <a class="case-link" href="projects/sagebrush-sites.html">Read Case Study<span class="sr-only"> for Sagebrush Sites</span> →</a>
-            <a href="https://sagebrushsites.com/" target="_blank" rel="noopener noreferrer">View Live Site<span class="sr-only"> for Sagebrush Sites (opens in a new tab)</span> →</a>
-            <a href="https://github.com/MichelleFeliciano/sagebrush-sites" target="_blank" rel="noopener noreferrer">View Code on GitHub<span class="sr-only"> for Sagebrush Sites (opens in a new tab)</span> →</a>
-          </p>
-        </article>
         <article class="project-card" data-short="Second Memory" data-skills="html css javascript python accessibility pwa storage data api security testing deployment">
           <div class="device-stage" data-tilt>
             <div class="device-rig">
@@ -361,26 +368,6 @@
             <a href="https://github.com/MichelleFeliciano/second-memory" target="_blank" rel="noopener noreferrer">View Code on GitHub<span class="sr-only"> for Second Memory (opens in a new tab)</span> →</a>
           </p>
         </article>
-        <article class="project-card" data-short="Operations Hub" data-skills="typescript javascript sql data api security testing accessibility">
-          <div class="device-stage" data-tilt>
-            <div class="device-rig">
-              <div class="browser" data-frames="images/frame-business-operations-hub-2.webp,images/frame-business-operations-hub-3.webp">
-                <div class="browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>Business Operations Hub · sample data</span></div>
-                <picture><source srcset="images/business-operations-hub.webp" type="image/webp"><img src="images/business-operations-hub.jpg" width="799" height="506" alt="The Business Operations Hub dashboard: a sidebar of sections, and cards showing revenue received, an outstanding balance, time tracked this week, open quotes, and low-stock items." loading="lazy"></picture>
-              </div>
-              <div class="phone"><picture><source srcset="images/phone-business-operations-hub.webp" type="image/webp"><img src="images/phone-business-operations-hub.jpg" width="260" height="563" alt="" loading="lazy"></picture></div>
-            </div>
-          </div>
-          <p class="project-tag">Personal project</p>
-          <h3>Business Operations Hub</h3>
-          <p class="project-date">October 2026</p>
-          <p><strong>Goal:</strong> replace scattered proposals, time sheets, and invoices with one system that follows client work from first inquiry to paid invoice, at no recurring cost.</p>
-          <p><strong>What I built:</strong> a self-hosted business system covering leads and scoping, quotes and client approval, projects, time, expenses, invoices and payments, reports and exports, and emailed client links, with role-based access, 27 database migrations, and over 550 automated tests.</p>
-          <p><strong>Stack:</strong> TypeScript, React, Hono, PostgreSQL. Private repository (code walkthrough on request); screenshots show made-up sample data.</p>
-          <p class="project-links">
-            <a class="case-link" href="projects/business-operations-hub.html">Read Case Study<span class="sr-only"> for Business Operations Hub</span> →</a>
-          </p>
-        </article>
         <article class="project-card" data-short="TripNest" data-skills="typescript css responsive accessibility pwa storage data api security testing deployment">
           <div class="device-stage device-stage--phones">
             <div class="phone"><picture><source srcset="images/tripnest-trips.webp" type="image/webp"><img src="images/tripnest-trips.jpg" width="260" height="563" alt="TripNest on a phone: the list of trips, showing a sample Puerto Rico vacation marked In Progress." loading="lazy"></picture></div>
@@ -398,7 +385,7 @@
             <a href="https://github.com/MichelleFeliciano/tripnest" target="_blank" rel="noopener noreferrer">View Code on GitHub<span class="sr-only"> for TripNest (opens in a new tab)</span> →</a>
           </p>
         </article>
-        <article class="project-card" data-short="MealMate" data-skills="typescript css responsive accessibility pwa storage data api security testing deployment">
+        <article class="project-card" data-short="MealMate" data-skills="typescript css responsive accessibility pwa storage data sql api security testing deployment">
           <div class="device-stage device-stage--icon"><img src="images/icon-mealmate.png" width="96" height="96" alt="" loading="lazy"></div>
           <p class="project-tag">Personal project</p>
           <h3>MealMate</h3>
@@ -455,7 +442,7 @@
           <h3>Michelle Feliciano — Portfolio</h3>
           <p class="project-date">September 2026 – Present</p>
           <p><strong>Goal:</strong> showcase skills, projects, education, and experience in one place, with direct links to live work and code.</p>
-          <p><strong>What I built:</strong> this responsive, accessible portfolio — light/dark mode, mobile navigation, a downloadable résumé, and in-depth case studies for my three largest projects, deployed on GitHub Pages.</p>
+          <p><strong>What I built:</strong> this responsive, accessible portfolio — light/dark mode, mobile navigation, a downloadable résumé, and an in-depth case study of Second Memory, deployed on GitHub Pages.</p>
           <p><strong>Stack:</strong> HTML, CSS, JavaScript, zero external dependencies.</p>
           <p class="project-links">
             <a href="https://michellefeliciano.github.io/" target="_blank" rel="noopener noreferrer">View Live Site<span class="sr-only"> for my portfolio (opens in a new tab)</span> →</a>

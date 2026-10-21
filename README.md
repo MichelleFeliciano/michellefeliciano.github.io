@@ -9,7 +9,7 @@ step, no external dependencies.
 
 - `index.html` — page content and structure
 - `404.html` — page shown for addresses that do not exist (GitHub Pages uses it automatically)
-- `projects/` — one in-depth case-study page per project
+- `projects/` — the in-depth case-study page (currently Second Memory)
 - `styles.css` — design tokens, layout, light/dark theme
 - `script.js` — theme toggle, mobile nav, active-link highlighting, motion (scroll reveals,
   progress bar, mockup tilt), the skills-across-projects matrix (built from `data-skills` on the

@@ -458,7 +458,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 /* Skills */
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
 }
 .skill-card {
@@ -742,7 +742,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   border-radius: var(--radius);
 }
 
-.matrix { width: 100%; min-width: 880px; border-collapse: collapse; } /* nine project columns: scroll sideways on small screens */
+.matrix { width: 100%; min-width: 760px; border-collapse: collapse; } /* seven project columns: scroll sideways on small screens */
 .matrix th, .matrix td { padding: 10px 6px; border-bottom: 1px solid var(--border); text-align: center; }
 .matrix tbody tr:last-child th, .matrix tbody tr:last-child td { border-bottom: 0; }
 .matrix thead th {
